@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact & FAQ | Glorious Hair</title>
+<meta name="description" content="Contact Glorious Hair on WhatsApp, and read answers about ordering, bank transfer, lay-by, delivery and hair care." />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/tailwind.css" />
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👑%3C/text%3E%3C/svg%3E" />
+<meta name="theme-color" content="#E6007E" />
+<meta property="og:type" content="website" /><meta property="og:site_name" content="Glorious Hair" />
+<meta property="og:title" content="Contact & FAQ — Glorious Hair" />
+<meta property="og:description" content="Contact Glorious Hair on WhatsApp, and read answers about ordering, bank transfer, lay-by and delivery." />
+<meta property="og:image" content="assets/images/Philile-removebg-preview.png" /><meta name="twitter:card" content="summary_large_image" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="overflow-x-hidden antialiased bg-blush" data-page="contact">
+
+<header class="pt-36 pb-10 text-center">
+  <div class="max-w-2xl mx-auto px-6 reveal">
+    <p class="font-script text-3xl text-glory-600">We'd love to hear from you</p>
+    <h1 class="font-display text-5xl sm:text-6xl font-semibold mt-1">Get in Touch</h1>
+    <p class="text-ink/60 font-body mt-3">Questions about a length, colour or your order? We're a message away.</p>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-6 pb-24">
+  <!-- contact methods -->
+  <div class="grid sm:grid-cols-3 gap-5 mb-14">
+    <a href="#" id="waCard" target="_blank" rel="noopener" class="reveal bg-white rounded-3xl shadow-soft p-7 hover:-translate-y-1 transition"><div class="w-12 h-12 rounded-2xl bg-[#25D366]/15 grid place-items-center text-2xl text-[#25D366]"><i class="fa-brands fa-whatsapp"></i></div><h3 class="font-display text-xl mt-4">WhatsApp</h3><p id="waNum" class="text-ink/55 font-body text-sm mt-1"></p><span class="text-glory-600 font-body text-sm">Chat now <i class="fa-solid fa-arrow-right-long"></i></span></a>
+    <div class="reveal bg-white rounded-3xl shadow-soft p-7"><div class="w-12 h-12 rounded-2xl bg-glory-100 grid place-items-center text-xl text-glory-600"><i class="fa-solid fa-share-nodes"></i></div><h3 class="font-display text-xl mt-4">Social</h3><p class="text-ink/55 font-body text-sm mt-1">@ Glorious Hair on Facebook &amp; Instagram</p></div>
+    <div class="reveal bg-white rounded-3xl shadow-soft p-7"><div class="w-12 h-12 rounded-2xl bg-glory-100 grid place-items-center text-xl text-glory-600"><i class="fa-regular fa-clock"></i></div><h3 class="font-display text-xl mt-4">Hours</h3><p class="text-ink/55 font-body text-sm mt-1">Mon–Sat · 08:00–18:00<br>Sun · messages only</p></div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-8 items-start">
+    <!-- form -->
+    <form id="contactForm" class="reveal bg-white rounded-3xl shadow-soft p-7 sm:p-9 space-y-4">
+      <h2 class="font-display text-3xl font-semibold">Send us a message</h2>
+      <div><label class="lbl">Your name</label><input name="name" required class="field mt-1" placeholder="Your name"></div>
+      <div><label class="lbl">WhatsApp / phone</label><input name="phone" required class="field mt-1" placeholder="073 000 0000"></div>
+      <div><label class="lbl">Message</label><textarea name="msg" rows="4" required class="field mt-1" placeholder="Hi Glorious Hair, I'd like to know about…"></textarea></div>
+      <button class="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-glory-600 hover:bg-glory-500 text-white font-body shadow-glow transition"><i class="fa-brands fa-whatsapp text-lg"></i> Send on WhatsApp</button>
+      <p class="text-center text-ink/40 text-xs font-body">This opens WhatsApp with your message ready to send.</p>
+    </form>
+
+    <!-- FAQ -->
+    <div class="reveal">
+      <h2 class="font-display text-3xl font-semibold mb-4">Frequently asked</h2>
+      <div id="faq" class="space-y-3"></div>
+    </div>
+  </div>
+</main>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const { WA, WA_DISPLAY } = GH;
+document.getElementById('waNum').textContent = WA_DISPLAY;
+document.getElementById('waCard').href = 'https://wa.me/'+WA+'?text='+encodeURIComponent('Hi Glorious Hair! I have a question 💕');
+
+document.getElementById('contactForm').addEventListener('submit',e=>{
+  e.preventDefault(); const f=e.target;
+  const t=`Hi Glorious Hair!%0AName: ${encodeURIComponent(f.name.value)}%0APhone: ${encodeURIComponent(f.phone.value)}%0A%0A${encodeURIComponent(f.msg.value)}`;
+  window.open('https://wa.me/'+WA+'?text='+t,'_blank'); ghToast('Opening WhatsApp…');
+});
+
+const FAQ=[
+  ['Is the hair 100% human hair?','Yes — every wig is made from premium, cuticle-aligned 100% human hair. It can be washed, styled, curled and coloured like your own.'],
+  ['How do I pay?','You can pay by bank transfer (EFT) and upload your proof of payment at checkout, or choose our 3-month lay-by. We confirm every order on WhatsApp.'],
+  ['How does the 3-month lay-by work?','Pay a deposit today, then settle the balance over three months at your own pace. Once fully paid, we ship your hair. Just pick "Lay-By" at checkout.'],
+  ['Do you deliver nationwide?','Yes, we deliver anywhere in South Africa. Delivery is free on orders over R3 000; otherwise a flat R150 applies.'],
+  ['Which length should I choose?','Glueless wigs run 10″–16″, curly wigs 10″–20″, and full frontals 20″–28″. Not sure? Message us on WhatsApp and we\'ll help you choose.'],
+  ['How do I care for my wig?','Wash gently with sulphate-free shampoo, condition, air-dry and store on a wig stand. Avoid excessive heat to keep it glossy for longer.'],
+];
+document.getElementById('faq').innerHTML = FAQ.map(([q,a])=>`
+  <details class="group bg-white rounded-2xl shadow-soft overflow-hidden">
+    <summary class="cursor-pointer list-none flex items-center justify-between gap-4 p-5 font-body font-medium text-ink">
+      ${q}<span class="text-glory-600 text-xl transition group-open:rotate-45">+</span>
+    </summary>
+    <div class="px-5 pb-5 -mt-1 text-ink/60 font-body text-sm">${a}</div>
+  </details>`).join('');
+</script>
+</body>
+</html>

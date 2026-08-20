@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shop — Price List | Glorious Hair</title>
+<meta name="description" content="Glorious Hair full price list — Full Frontal, Glueless and Curly wigs by length. Pick your colour and add to cart. Nationwide delivery & 3-month lay-by." />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/tailwind.css" />
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👑%3C/text%3E%3C/svg%3E" />
+<meta name="theme-color" content="#E6007E" />
+<meta property="og:type" content="website" /><meta property="og:site_name" content="Glorious Hair" />
+<meta property="og:title" content="Shop — Glorious Hair Price List" />
+<meta property="og:description" content="Full Frontal, Glueless and Curly wigs by length. Pick your colour and add to cart. Nationwide delivery & 3-month lay-by." />
+<meta property="og:image" content="assets/images/Philile-removebg-preview.png" /><meta name="twitter:card" content="summary_large_image" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="overflow-x-hidden antialiased bg-blush" data-page="shop">
+
+<!-- header spacer -->
+<header class="pt-36 pb-10 bg-gradient-to-b from-glory-50 to-blush">
+  <div class="max-w-7xl mx-auto px-6 text-center reveal">
+    <p class="font-script text-3xl text-glory-600">Our price list</p>
+    <h1 class="font-display text-5xl sm:text-6xl font-semibold mt-1">Shop Glorious Hair</h1>
+    <p class="text-ink/60 mt-4 font-body max-w-2xl mx-auto">Real prices, real human hair. Choose your colour, tap a length to add it to your cart, then check out with bank transfer or lay-by.</p>
+    <div class="mt-6 flex flex-wrap justify-center gap-2 font-body text-sm">
+      <a href="#frontal" class="px-4 py-2 rounded-full bg-white border border-glory-100 hover:border-glory-500 transition">Full Frontal</a>
+      <a href="#glueless" class="px-4 py-2 rounded-full bg-white border border-glory-100 hover:border-glory-500 transition">Glueless</a>
+      <a href="#curly" class="px-4 py-2 rounded-full bg-white border border-glory-100 hover:border-glory-500 transition">Curly</a>
+    </div>
+  </div>
+</header>
+
+<!-- product cards -->
+<section class="max-w-7xl mx-auto px-6 pb-6">
+  <div id="prodGrid" class="grid grid-cols-2 gap-4 sm:gap-8"></div>
+</section>
+
+<!-- full price list -->
+<div class="max-w-7xl mx-auto px-6 pt-8">
+  <div class="flex items-center gap-4 reveal"><h2 class="font-display text-3xl sm:text-4xl font-semibold whitespace-nowrap">Full Price List</h2><span class="h-px flex-1 bg-glory-100"></span></div>
+  <p class="text-ink/55 font-body mt-2 reveal">Every length &amp; price at a glance — pick a colour and add straight to your cart.</p>
+</div>
+<main id="catalogue" class="max-w-7xl mx-auto px-6 pb-24 pt-8 space-y-16"></main>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const { CATALOGUE, COLORS, R, cart } = GH;
+document.getElementById('prodGrid').innerHTML = GH.PRODUCTS.map(GHUI.productCard).join('');
+const sel = {}; // per-category selected colour id
+const main = document.getElementById('catalogue');
+
+main.innerHTML = CATALOGUE.map((p,ci)=>{
+  sel[p.id]=COLORS[0].id;
+  const swatches = COLORS.map(c=>`<button data-cat="${p.id}" data-color="${c.id}" title="${c.name}" class="cat-swatch w-8 h-8 rounded-full border border-black/10 transition ${c.id===COLORS[0].id?'active':''}" style="background:${c.hex}"></button>`).join('');
+  const rows = p.sizes.map(s=>`
+    <div class="flex items-center justify-between gap-3 py-3 border-b border-glory-100 last:border-0">
+      <div class="font-body"><span class="font-medium text-ink">${s.label}</span><span class="text-ink/40"> length</span></div>
+      <div class="flex items-center gap-4">
+        <span class="font-display text-xl text-glory-600">${R(s.price)}</span>
+        <button data-cat="${p.id}" data-label="${s.label}" data-price="${s.price}" class="add-len px-4 py-2 rounded-full bg-ink text-white text-sm font-body hover:bg-glory-600 transition">Add</button>
+      </div>
+    </div>`).join('');
+  const flip = ci%2===1;
+  return `<section id="${p.id}" class="scroll-mt-32 reveal grid lg:grid-cols-2 gap-8 items-stretch bg-white rounded-[2rem] shadow-soft overflow-hidden">
+    <div class="relative ${flip?'lg:order-2':''}">
+      <img id="img-${p.id}" src="${p.img}" alt="${p.name}" class="w-full h-72 lg:h-full object-cover">
+      <span class="absolute top-4 left-4 bg-glory-600 text-white text-xs px-3 py-1 rounded-full font-body">${p.badge}</span>
+    </div>
+    <div class="p-7 sm:p-10">
+      <h2 class="font-display text-3xl sm:text-4xl font-semibold">${p.name}</h2>
+      <p class="text-ink/60 font-body mt-2">${p.blurb}</p>
+      <div class="mt-5"><div class="font-body text-xs uppercase tracking-widest text-ink/50 mb-2">Colour — <span id="cn-${p.id}">${COLORS[0].name}</span></div><div class="flex flex-wrap gap-2.5">${swatches}</div></div>
+      <div class="mt-6">${rows}</div>
+    </div>
+  </section>`;
+}).join('');
+
+// colour selection
+main.querySelectorAll('.cat-swatch').forEach(b=>b.onclick=()=>{
+  const cat=b.dataset.cat, c=COLORS.find(x=>x.id===b.dataset.color); sel[cat]=c.id;
+  main.querySelectorAll(`.cat-swatch[data-cat="${cat}"]`).forEach(x=>x.classList.remove('active')); b.classList.add('active');
+  document.getElementById('cn-'+cat).textContent=c.name;
+  document.getElementById('img-'+cat).src=c.img;
+});
+// add length
+main.querySelectorAll('.add-len').forEach(b=>b.onclick=()=>{
+  const p=GH.byId(b.dataset.cat), c=COLORS.find(x=>x.id===sel[b.dataset.cat]);
+  cart.add({name:p.name, cat:p.cat, length:b.dataset.label, color:c.name, price:+b.dataset.price, img:c.img});
+  ghToast(`Added ${p.name} ${b.dataset.label} · ${c.name}`);
+});
+</script>
+</body>
+</html>

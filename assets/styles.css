@@ -1,0 +1,39 @@
+/* ========= Glorious Hair — shared styles ========= */
+html,body{font-family:'Jost',sans-serif;background:#FFF6FA;color:#0A0A0A;}
+::selection{background:#E6007E;color:#fff;}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:#FFE4F0;}
+::-webkit-scrollbar-thumb{background:linear-gradient(#EC4899,#E6007E);border-radius:20px;}
+
+/* Marquee */
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-slow{animation:marquee 40s linear infinite;}
+/* Float + blob */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.float{animation:float 6s ease-in-out infinite;}
+@keyframes blob{0%,100%{border-radius:42% 58% 63% 37%/42% 44% 56% 58%}50%{border-radius:63% 37% 42% 58%/58% 56% 44% 42%}}
+.blob{animation:blob 12s ease-in-out infinite;}
+/* Shimmer text */
+.shimmer{background:linear-gradient(90deg,#E6007E,#FA6FAE,#B76E79,#E6007E);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite;}
+@keyframes shine{to{background-position:250% 0}}
+/* Reveal */
+.reveal{opacity:0;transform:translateY(28px);}
+.gsap-ready .reveal{will-change:transform,opacity;}
+/* Nav underline */
+.nav-link{position:relative;}
+.nav-link::after{content:'';position:absolute;left:12px;right:12px;bottom:2px;height:2px;background:linear-gradient(90deg,#EC4899,#E6007E);transform:scaleX(0);transform-origin:center;transition:transform .35s ease;border-radius:2px;}
+.nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+/* Card sheen */
+.sheen{position:relative;overflow:hidden;}
+.sheen::before{content:'';position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);transition:left .7s;}
+.sheen:hover::before{left:140%;}
+.swatch.active{outline:3px solid #E6007E;outline-offset:3px;transform:scale(1.12);}
+.size-btn.active{background:#0A0A0A;color:#fff;border-color:#0A0A0A;}
+/* Toast */
+#gh-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);z-index:80;background:#0A0A0A;color:#fff;padding:.85rem 1.4rem;border-radius:999px;font-size:.9rem;box-shadow:0 12px 40px -12px rgba(230,0,126,.6);transition:transform .45s cubic-bezier(.2,.9,.3,1.2);white-space:nowrap;}
+#gh-toast.show{transform:translate(-50%,0);}
+/* Forms */
+.field{width:100%;padding:.85rem 1.1rem;border:1px solid #F3C9DF;border-radius:.9rem;background:#fff;font-family:'Jost';outline:none;transition:.2s;}
+.field:focus{border-color:#E6007E;box-shadow:0 0 0 4px rgba(236,72,153,.15);}
+label.lbl{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#7a5563;font-weight:500;}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}}

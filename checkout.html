@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Checkout — Bank Transfer & Lay-By | Glorious Hair</title>
+<meta name="description" content="Review your Glorious Hair order, pay by bank transfer (EFT) or 3-month lay-by, and upload your proof of payment." />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/tailwind.css" />
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👑%3C/text%3E%3C/svg%3E" />
+<meta name="theme-color" content="#E6007E" /><meta name="robots" content="noindex" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="overflow-x-hidden antialiased bg-blush" data-page="checkout">
+
+<header class="pt-36 pb-8">
+  <div class="max-w-6xl mx-auto px-6 reveal">
+    <p class="font-script text-3xl text-glory-600">Almost yours</p>
+    <h1 class="font-display text-5xl font-semibold mt-1">Checkout</h1>
+    <p class="text-ink/60 font-body mt-2">Pay securely by bank transfer or lay-by, then upload your proof of payment.</p>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-6 pb-24 grid lg:grid-cols-5 gap-8 items-start">
+  <!-- CART -->
+  <section class="lg:col-span-3 space-y-6">
+    <div id="cartCard" class="bg-white rounded-3xl shadow-soft p-6 sm:p-8">
+      <h2 class="font-display text-2xl font-semibold mb-4">Your Cart</h2>
+      <div id="cartItems"></div>
+      <div id="emptyState" class="hidden text-center py-12">
+        <div class="text-5xl text-glory-300"><i class="fa-solid fa-bag-shopping"></i></div>
+        <p class="font-body text-ink/60 mt-3">Your cart is empty.</p>
+        <a href="shop.html" class="inline-flex mt-5 px-6 py-3 rounded-full bg-glory-600 text-white font-body hover:bg-glory-500 transition">Browse the price list</a>
+      </div>
+    </div>
+
+    <!-- DETAILS -->
+    <form id="orderForm" class="bg-white rounded-3xl shadow-soft p-6 sm:p-8 space-y-5">
+      <h2 class="font-display text-2xl font-semibold">Delivery Details</h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="lbl">Full name</label><input name="name" required class="field mt-1" placeholder="Naledi Mokoena"></div>
+        <div><label class="lbl">WhatsApp number</label><input name="phone" required class="field mt-1" placeholder="073 000 0000"></div>
+        <div class="sm:col-span-2"><label class="lbl">Email (optional)</label><input type="email" name="email" class="field mt-1" placeholder="you@email.com"></div>
+        <div class="sm:col-span-2"><label class="lbl">Delivery address</label><input name="address" required class="field mt-1" placeholder="Street, suburb"></div>
+        <div><label class="lbl">City / Town</label><input name="city" required class="field mt-1" placeholder="Johannesburg"></div>
+        <div><label class="lbl">Postal code</label><input name="zip" class="field mt-1" placeholder="2000"></div>
+        <div class="sm:col-span-2"><label class="lbl">Order notes (optional)</label><textarea name="notes" rows="2" class="field mt-1" placeholder="Preferred colour, style requests…"></textarea></div>
+      </div>
+
+      <!-- PAYMENT METHOD -->
+      <h2 class="font-display text-2xl font-semibold pt-2">Payment Method</h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <label class="pay-opt cursor-pointer rounded-2xl border-2 border-glory-500 bg-glory-50 p-4 flex gap-3 transition">
+          <input type="radio" name="pay" value="bank" checked class="mt-1 accent-glory-600">
+          <div><div class="font-display text-lg">Bank Transfer (EFT)</div><div class="text-ink/55 text-sm font-body">Pay the full amount &amp; upload proof</div></div>
+        </label>
+        <label class="pay-opt cursor-pointer rounded-2xl border-2 border-ink/10 p-4 flex gap-3 transition">
+          <input type="radio" name="pay" value="layby" class="mt-1 accent-glory-600">
+          <div><div class="font-display text-lg">3-Month Lay-By</div><div class="text-ink/55 text-sm font-body">Pay a deposit, settle over 3 months</div></div>
+        </label>
+      </div>
+
+      <!-- BANK DETAILS -->
+      <div id="bankPanel" class="rounded-2xl bg-ink text-white p-5">
+        <div class="flex items-center justify-between"><h3 class="font-display text-xl">Banking Details</h3><button type="button" id="copyBank" class="text-xs font-body bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full transition">Copy</button></div>
+        <dl id="bankList" class="mt-3 grid grid-cols-2 gap-y-2 text-sm font-body"></dl>
+        <p id="bankRef" class="mt-3 text-glory-200 text-sm font-body"></p>
+        <p id="bankWarn" class="mt-2 text-amber-300 text-xs font-body hidden">⚠ Demo banking details — replace with the real account before going live.</p>
+      </div>
+
+      <!-- LAY-BY INFO -->
+      <div id="laybyPanel" class="rounded-2xl bg-glory-50 border border-glory-100 p-5 hidden">
+        <h3 class="font-display text-xl text-glory-700">How lay-by works</h3>
+        <ol class="mt-2 space-y-1 text-sm font-body text-ink/70 list-decimal pl-5">
+          <li>Pay a <b id="laybyDeposit">33%</b> deposit today by EFT (details above) and upload proof.</li>
+          <li>Pay the balance over the next 3 months — any amount, any time.</li>
+          <li>Once fully paid, we ship your hair nationwide. 💕</li>
+        </ol>
+        <p class="mt-3 font-body text-sm">Deposit due now: <b id="laybyAmt" class="text-glory-700">R0</b></p>
+      </div>
+
+      <!-- PROOF UPLOAD -->
+      <div>
+        <h2 class="font-display text-2xl font-semibold">Proof of Payment</h2>
+        <p class="text-ink/55 text-sm font-body mt-1">Upload your EFT receipt or screenshot (JPG, PNG or PDF).</p>
+        <label id="dropZone" class="mt-3 flex flex-col items-center justify-center gap-2 border-2 border-dashed border-glory-300 rounded-2xl p-8 text-center cursor-pointer hover:bg-glory-50 transition">
+          <div class="text-3xl text-glory-500"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+          <div class="font-body text-ink/70"><span class="text-glory-600 font-medium">Tap to upload</span> your proof of payment</div>
+          <div class="text-ink/40 text-xs font-body">Max 8 MB</div>
+          <input id="proof" type="file" accept="image/*,application/pdf" class="hidden">
+        </label>
+        <div id="proofPreview" class="hidden mt-3 flex items-center gap-3 bg-glory-50 rounded-2xl p-3">
+          <img id="proofThumb" class="w-14 h-14 rounded-lg object-cover hidden" alt="proof">
+          <div id="proofDoc" class="w-14 h-14 rounded-lg bg-glory-100 grid place-items-center text-2xl text-glory-600 hidden"><i class="fa-solid fa-file-lines"></i></div>
+          <div class="flex-1 min-w-0"><div id="proofName" class="font-body text-sm truncate"></div><div id="proofSize" class="text-ink/40 text-xs font-body"></div></div>
+          <button type="button" id="proofRemove" class="text-ink/40 hover:text-glory-600 transition">✕</button>
+        </div>
+      </div>
+
+      <button type="submit" id="placeBtn" class="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-glory-600 hover:bg-glory-500 text-white font-body shadow-glow transition disabled:opacity-40 disabled:cursor-not-allowed">Place Order</button>
+      <p class="text-center text-ink/40 text-xs font-body">By placing your order you'll be taken to WhatsApp to send your proof and confirm. No card details are stored on this site.</p>
+    </form>
+  </section>
+
+  <!-- SUMMARY -->
+  <aside class="lg:col-span-2 lg:sticky lg:top-28">
+    <div class="bg-white rounded-3xl shadow-soft p-6 sm:p-8">
+      <h2 class="font-display text-2xl font-semibold">Order Summary</h2>
+      <dl class="mt-5 space-y-3 font-body text-ink/70">
+        <div class="flex justify-between"><dt>Subtotal</dt><dd id="sumSubtotal">R0</dd></div>
+        <div class="flex justify-between"><dt>Delivery</dt><dd id="sumDelivery">—</dd></div>
+        <div class="flex justify-between text-ink font-medium text-lg pt-3 border-t border-glory-100"><dt>Total</dt><dd id="sumTotal" class="font-display text-glory-600">R0</dd></div>
+      </dl>
+      <div class="mt-5 flex items-center gap-2 text-ink/50 text-xs font-body"><i class="fa-solid fa-lock text-glory-500"></i> Free nationwide delivery on orders over <span id="freeOverTxt"></span>.</div>
+      <div class="mt-4 flex flex-wrap gap-2 text-xs font-body"><span class="px-3 py-1.5 rounded-full bg-glory-50 text-glory-700">EFT / Bank</span><span class="px-3 py-1.5 rounded-full bg-glory-50 text-glory-700">3-Month Lay-By</span><span class="px-3 py-1.5 rounded-full bg-glory-50 text-glory-700">WhatsApp support</span></div>
+    </div>
+  </aside>
+</main>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirmModal" class="fixed inset-0 z-[70] bg-ink/70 backdrop-blur-sm hidden items-center justify-center p-4">
+  <div class="bg-white rounded-3xl shadow-soft max-w-md w-full p-8 text-center relative">
+    <div class="text-5xl text-glory-500"><i class="fa-solid fa-champagne-glasses"></i></div>
+    <h3 class="font-display text-3xl font-semibold mt-2">Order Placed!</h3>
+    <p class="font-body text-ink/60 mt-2">Your reference is</p>
+    <p id="confRef" class="font-mono text-lg text-glory-600 font-semibold"></p>
+    <p class="font-body text-ink/70 mt-4 text-sm">Tap below to open WhatsApp with your order — please <b>attach your proof of payment</b> in the chat to complete it.</p>
+    <a id="confWa" href="#" target="_blank" rel="noopener" class="mt-5 inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] text-white font-body hover:brightness-95 transition"><i class="fa-brands fa-whatsapp text-lg"></i> Send order on WhatsApp</a>
+    <button id="confDownload" class="mt-3 inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full border border-ink/15 text-ink font-body hover:bg-blush transition">Download order summary</button>
+    <button id="confClose" class="mt-4 text-ink/40 font-body text-sm hover:text-glory-600">Close</button>
+  </div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const { R, cart, BANK, DELIVERY } = GH;
+const $ = id => document.getElementById(id);
+let proofFile = null;
+
+/* ---- render cart + summary ---- */
+function deliveryFee(sub){ return sub>0 && sub<DELIVERY.freeOver ? DELIVERY.fee : 0; }
+function render(){
+  const items = cart.items();
+  $('freeOverTxt').textContent = R(DELIVERY.freeOver);
+  if(!items.length){
+    $('cartItems').innerHTML=''; $('emptyState').classList.remove('hidden');
+    $('placeBtn').disabled = true;
+  } else {
+    $('emptyState').classList.add('hidden'); $('placeBtn').disabled = false;
+    $('cartItems').innerHTML = items.map((it,i)=>`
+      <div class="flex items-center gap-4 py-4 border-b border-glory-100 last:border-0">
+        <img src="${it.img}" class="w-16 h-16 rounded-xl object-cover" alt="">
+        <div class="flex-1 min-w-0">
+          <div class="font-display text-lg leading-tight">${it.name}</div>
+          <div class="text-ink/50 text-sm font-body">${it.length} · ${it.color}</div>
+          <div class="flex items-center gap-2 mt-1">
+            <button data-dec="${i}" class="w-7 h-7 rounded-full bg-glory-50 hover:bg-glory-100 font-body">−</button>
+            <span class="w-6 text-center font-body">${it.qty}</span>
+            <button data-inc="${i}" class="w-7 h-7 rounded-full bg-glory-50 hover:bg-glory-100 font-body">+</button>
+          </div>
+        </div>
+        <div class="text-right"><div class="font-display text-lg text-glory-600">${R(it.price*it.qty)}</div><button data-rm="${i}" class="text-ink/35 hover:text-glory-600 text-xs font-body mt-1">Remove</button></div>
+      </div>`).join('');
+  }
+  const sub = cart.subtotal(), del = deliveryFee(sub), total = sub+del;
+  $('sumSubtotal').textContent = R(sub);
+  $('sumDelivery').textContent = sub===0 ? '—' : (del===0 ? 'FREE' : R(del));
+  $('sumTotal').textContent = R(total);
+  $('laybyAmt').textContent = R(Math.round(total/3));
+  updateBank(total);
+}
+$('cartItems').addEventListener('click',e=>{
+  const t=e.target;
+  if(t.dataset.inc!==undefined){ const i=+t.dataset.inc, it=cart.items()[i]; cart.setQty(i,it.qty+1); }
+  else if(t.dataset.dec!==undefined){ const i=+t.dataset.dec, it=cart.items()[i]; cart.setQty(i,it.qty-1); }
+  else if(t.dataset.rm!==undefined){ cart.remove(+t.dataset.rm); }
+});
+document.addEventListener('gh:cart', render);
+
+/* ---- reference ---- */
+const REF = 'GH-' + new Date().toISOString().slice(2,10).replace(/-/g,'') + '-' + Math.floor(1000+Math.random()*9000);
+
+/* ---- bank details ---- */
+function updateBank(total){
+  $('bankList').innerHTML = [
+    ['Bank',BANK.bank],['Account name',BANK.name],['Account no.',BANK.account],
+    ['Account type',BANK.type],['Branch code',BANK.branch],['Amount due', R(total)],
+  ].map(([k,v])=>`<dt class="text-white/50">${k}</dt><dd class="text-right font-medium">${v}</dd>`).join('');
+  $('bankRef').innerHTML = `Payment reference: <b class="text-white">${REF}</b>`;
+  $('bankWarn').classList.toggle('hidden', !BANK.placeholder);
+}
+$('copyBank').onclick=()=>{ const t=`Glorious Hair EFT\n${BANK.bank}\nName: ${BANK.name}\nAcc: ${BANK.account}\nBranch: ${BANK.branch}\nRef: ${REF}`; navigator.clipboard?.writeText(t); ghToast('Banking details copied'); };
+
+/* ---- payment method toggle ---- */
+document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener('change',()=>{
+  const layby = document.querySelector('input[name="pay"]:checked').value==='layby';
+  $('laybyPanel').classList.toggle('hidden', !layby);
+  document.querySelectorAll('.pay-opt').forEach(l=>{
+    const on=l.querySelector('input').checked;
+    l.classList.toggle('border-glory-500',on); l.classList.toggle('bg-glory-50',on); l.classList.toggle('border-ink/10',!on);
+  });
+}));
+
+/* ---- proof upload ---- */
+$('proof').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  if(f.size > 8*1024*1024){ ghToast('File too large (max 8 MB)'); e.target.value=''; return; }
+  proofFile=f;
+  $('proofPreview').classList.remove('hidden');
+  $('proofName').textContent=f.name;
+  $('proofSize').textContent=(f.size/1024/1024).toFixed(2)+' MB';
+  const isImg=f.type.startsWith('image/');
+  $('proofThumb').classList.toggle('hidden',!isImg); $('proofDoc').classList.toggle('hidden',isImg);
+  if(isImg) $('proofThumb').src=URL.createObjectURL(f);
+});
+$('proofRemove').onclick=()=>{ proofFile=null; $('proof').value=''; $('proofPreview').classList.add('hidden'); };
+
+/* ---- build order text ---- */
+function orderText(){
+  const items=cart.items(), sub=cart.subtotal(), del=deliveryFee(sub), total=sub+del;
+  const f=$('orderForm'); const pay=f.pay.value;
+  let t=`*NEW GLORIOUS HAIR ORDER*\nRef: ${REF}\n\n`;
+  items.forEach(it=>{ t+=`• ${it.name} — ${it.length}, ${it.color} ×${it.qty} = ${R(it.price*it.qty)}\n`; });
+  t+=`\nSubtotal: ${R(sub)}\nDelivery: ${del===0?'FREE':R(del)}\n*Total: ${R(total)}*\n`;
+  t+=`Payment: ${pay==='layby'?'3-Month Lay-By (deposit '+R(Math.round(total/3))+')':'Bank Transfer (EFT)'}\n\n`;
+  t+=`Name: ${f.name.value}\nPhone: ${f.phone.value}\n`;
+  if(f.email.value) t+=`Email: ${f.email.value}\n`;
+  t+=`Address: ${f.address.value}, ${f.city.value}${f.zip.value?' '+f.zip.value:''}\n`;
+  if(f.notes.value) t+=`Notes: ${f.notes.value}\n`;
+  t+=`\nProof of payment: ${proofFile?('attaching "'+proofFile.name+'"'):'to be sent'} 📎`;
+  return t;
+}
+
+/* ---- submit ---- */
+$('orderForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  if(!cart.items().length){ ghToast('Your cart is empty'); return; }
+  if(!proofFile){ if(!confirm('You have not uploaded proof of payment yet. Continue and send it on WhatsApp?')) return; }
+  const wa='https://wa.me/'+GH.WA+'?text='+encodeURIComponent(orderText());
+  $('confRef').textContent=REF;
+  $('confWa').href=wa;
+  const modal=$('confirmModal'); modal.classList.remove('hidden'); modal.classList.add('flex');
+});
+$('confClose').onclick=()=>{ const m=$('confirmModal'); m.classList.add('hidden'); m.classList.remove('flex'); };
+$('confDownload').onclick=()=>{
+  const blob=new Blob([orderText().replace(/\*/g,'')],{type:'text/plain'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=REF+'.txt'; a.click();
+};
+
+render();
+</script>
+</body>
+</html>

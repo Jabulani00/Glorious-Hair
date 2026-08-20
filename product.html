@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product | Glorious Hair</title>
+<meta name="description" content="Shop premium human-hair wigs at Glorious Hair — choose your colour and length, view full details, and order by bank transfer or lay-by." />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/tailwind.css" />
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👑%3C/text%3E%3C/svg%3E" />
+<meta name="theme-color" content="#E6007E" />
+<meta property="og:type" content="product" /><meta property="og:site_name" content="Glorious Hair" />
+<meta property="og:title" content="Shop premium wigs — Glorious Hair" />
+<meta property="og:description" content="Choose your colour and length, view full details, and order by bank transfer or lay-by." />
+<meta property="og:image" content="assets/images/Philile-removebg-preview.png" /><meta name="twitter:card" content="summary_large_image" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="overflow-x-hidden antialiased bg-white" data-page="shop">
+
+<main class="pt-32 pb-24 max-w-7xl mx-auto px-6">
+  <!-- breadcrumb -->
+  <nav class="font-body text-sm text-ink/50 mb-6"><a href="index.html" class="hover:text-glory-600">Home</a> / <a href="shop.html" class="hover:text-glory-600">Shop</a> / <span id="bc" class="text-ink/80"></span></nav>
+
+  <div id="notfound" class="hidden text-center py-24">
+    <div class="text-5xl">💇🏾‍♀️</div><h1 class="font-display text-4xl mt-3">Product not found</h1>
+    <a href="shop.html" class="inline-flex mt-6 px-6 py-3 rounded-full bg-glory-600 text-white font-body">Back to shop</a>
+  </div>
+
+  <div id="product" class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+    <!-- GALLERY -->
+    <div class="lg:sticky lg:top-28">
+      <div class="relative rounded-[2rem] overflow-hidden shadow-soft bg-blush">
+        <img id="mainImg" alt="" class="w-full aspect-[4/5] object-cover transition-all duration-500">
+        <span id="mainBadge" class="absolute top-4 left-4 bg-glory-600 text-white text-xs px-3 py-1.5 rounded-full font-body"></span>
+      </div>
+      <div id="thumbs" class="mt-4 grid grid-cols-4 gap-3"></div>
+    </div>
+
+    <!-- INFO -->
+    <div>
+      <div class="flex items-center gap-3">
+        <span id="pBadge" class="bg-glory-100 text-glory-700 text-xs px-3 py-1 rounded-full font-body"></span>
+        <span id="pRating" class="text-glory-500 text-sm"></span>
+      </div>
+      <h1 id="pTitle" class="font-display text-4xl sm:text-5xl font-semibold mt-3"></h1>
+      <p id="pShort" class="text-ink/60 font-body mt-3"></p>
+
+      <div class="mt-5 flex items-end gap-3">
+        <span id="pPrice" class="font-display text-4xl font-semibold text-glory-600"></span>
+        <span id="pLay" class="mb-1 text-xs bg-glory-50 text-glory-700 px-2 py-0.5 rounded-full font-body"></span>
+      </div>
+
+      <!-- colour -->
+      <div class="mt-7">
+        <div class="flex items-center justify-between"><span class="font-body text-sm uppercase tracking-widest text-ink/60">Colour</span><span id="pColorName" class="font-body text-sm text-ink/80"></span></div>
+        <div id="pSwatches" class="flex flex-wrap gap-3 mt-3"></div>
+      </div>
+      <!-- length -->
+      <div class="mt-7">
+        <div class="flex items-center justify-between"><span class="font-body text-sm uppercase tracking-widest text-ink/60">Length</span><span class="font-body text-xs text-ink/40">real price list</span></div>
+        <div id="pSizes" class="flex flex-wrap gap-2.5 mt-3"></div>
+      </div>
+      <!-- qty + actions -->
+      <div class="mt-8 flex items-center gap-4">
+        <div class="flex items-center rounded-full border border-ink/15 font-body">
+          <button id="qMinus" class="w-11 h-11 grid place-items-center hover:text-glory-600">−</button>
+          <span id="qVal" class="w-8 text-center">1</span>
+          <button id="qPlus" class="w-11 h-11 grid place-items-center hover:text-glory-600">+</button>
+        </div>
+        <button id="pAdd" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-glory-600 hover:bg-glory-500 text-white font-body shadow-glow transition">Add to Cart — <span id="pAddPrice"></span></button>
+      </div>
+      <a id="pWa" href="#" target="_blank" rel="noopener" class="mt-3 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border-2 border-ink text-ink font-body hover:bg-ink hover:text-white transition"><i class="fa-brands fa-whatsapp text-lg"></i> Order on WhatsApp</a>
+
+      <!-- trust -->
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="rounded-2xl bg-blush p-3"><i class="fa-solid fa-crown text-glory-600 text-lg"></i><div class="text-[11px] font-body text-ink/60 mt-1">100% human hair</div></div>
+        <div class="rounded-2xl bg-blush p-3"><i class="fa-solid fa-truck-fast text-glory-600 text-lg"></i><div class="text-[11px] font-body text-ink/60 mt-1">Nationwide delivery</div></div>
+        <div class="rounded-2xl bg-blush p-3"><i class="fa-solid fa-credit-card text-glory-600 text-lg"></i><div class="text-[11px] font-body text-ink/60 mt-1">3-month lay-by</div></div>
+        <div class="rounded-2xl bg-blush p-3"><i class="fa-solid fa-arrow-rotate-left text-glory-600 text-lg"></i><div class="text-[11px] font-body text-ink/60 mt-1">14-day returns</div></div>
+      </div>
+
+      <!-- tabs -->
+      <div class="mt-9 border-t border-glory-100 pt-6">
+        <div id="tabBtns" class="flex flex-wrap gap-2 font-body text-sm"></div>
+        <div id="tabBody" class="mt-5 font-body text-ink/70 leading-relaxed"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED -->
+  <section id="relatedWrap" class="mt-24">
+    <div class="flex items-end justify-between mb-8"><h2 class="font-display text-3xl sm:text-4xl font-semibold">You may also love</h2><a href="shop.html" class="font-body text-glory-600 hover:text-glory-700">Shop all →</a></div>
+    <div id="related" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </section>
+</main>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const { R, cart, COLORS, colorBy, lineOf, productBy, PRODUCTS } = GH;
+const $ = id => document.getElementById(id);
+const id = new URLSearchParams(location.search).get('id') || 'full-frontal';
+const p = productBy(id);
+
+if(!p){ $('product').classList.add('hidden'); $('relatedWrap').classList.add('hidden'); $('notfound').classList.remove('hidden'); }
+else {
+  const line = lineOf(p);
+  document.title = p.title + ' | Glorious Hair';
+  const st = { color: colorBy(p.color), size: line.sizes[0], qty:1 };
+
+  $('bc').textContent = p.title;
+  $('pBadge').textContent = p.badge;
+  $('pRating').textContent = '★★★★★ '+p.rating+' · '+p.sold.toLocaleString('en-ZA')+' sold';
+  $('pTitle').textContent = p.title;
+  $('pShort').textContent = line.blurb;
+  $('mainBadge').textContent = p.badge;
+
+  // gallery
+  function setMain(src){ $('mainImg').src=src; $('mainImg').alt=p.title; }
+  setMain(p.img);
+  $('thumbs').innerHTML = p.gallery.map((g,i)=>`<button data-g="${g}" class="thumb rounded-2xl overflow-hidden aspect-square ${i===0?'ring-2 ring-glory-600':'ring-1 ring-black/5'}"><img src="${g}" class="w-full h-full object-cover" alt="${p.title} view ${i+1}"></button>`).join('');
+  $('thumbs').querySelectorAll('.thumb').forEach(b=>b.onclick=()=>{ setMain(b.dataset.g);
+    $('thumbs').querySelectorAll('.thumb').forEach(x=>{x.classList.remove('ring-2','ring-glory-600');x.classList.add('ring-1','ring-black/5');});
+    b.classList.add('ring-2','ring-glory-600'); b.classList.remove('ring-1','ring-black/5'); });
+
+  function price(){ return st.size.price; }
+  function render(){
+    $('pPrice').textContent = R(price());
+    $('pLay').textContent = 'Lay-by from '+R(Math.round(price()/3))+'/mo';
+    $('pColorName').textContent = st.color.name;
+    $('pAddPrice').textContent = R(price()*st.qty);
+    $('qVal').textContent = st.qty;
+    const msg = `Hi Glorious Hair! I'd like to order the ${p.title} — ${st.color.name}, ${st.size.label}, qty ${st.qty} (${R(price()*st.qty)}).`;
+    $('pWa').href='https://wa.me/'+GH.WA+'?text='+encodeURIComponent(msg);
+  }
+  // swatches
+  $('pSwatches').innerHTML = COLORS.map(c=>`<button data-c="${c.id}" title="${c.name}" class="pw swatch w-9 h-9 rounded-full border border-black/10 transition ${c.id===st.color.id?'active':''}" style="background:${c.hex}"></button>`).join('');
+  $('pSwatches').querySelectorAll('.pw').forEach(b=>b.onclick=()=>{ st.color=COLORS.find(x=>x.id===b.dataset.c);
+    $('pSwatches').querySelectorAll('.pw').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+    setMain(st.color.img);
+    // sync thumb ring off
+    $('thumbs').querySelectorAll('.thumb').forEach(x=>{x.classList.remove('ring-2','ring-glory-600');x.classList.add('ring-1','ring-black/5');});
+    render(); });
+  // sizes
+  $('pSizes').innerHTML = line.sizes.map((s,i)=>`<button data-i="${i}" class="ps size-btn px-4 py-2 rounded-full border border-ink/20 font-body text-sm transition ${i===0?'active':''}">${s.label} <span class="opacity-60">· ${R(s.price)}</span></button>`).join('');
+  $('pSizes').querySelectorAll('.ps').forEach(b=>b.onclick=()=>{ st.size=line.sizes[+b.dataset.i];
+    $('pSizes').querySelectorAll('.ps').forEach(x=>x.classList.remove('active')); b.classList.add('active'); render(); });
+  // qty
+  $('qMinus').onclick=()=>{ st.qty=Math.max(1,st.qty-1); render(); };
+  $('qPlus').onclick=()=>{ st.qty++; render(); };
+  // add
+  $('pAdd').onclick=()=>{ cart.add({name:p.title, cat:line.cat, length:st.size.label, color:st.color.name, price:price(), img:p.img, qty:st.qty}); ghToast(`Added ${p.title} · ${st.size.label} ×${st.qty} 💕`); };
+
+  // tabs
+  const care='Wash gently with sulphate-free shampoo, condition mid-length to ends, and let it air-dry on a wig stand. Avoid excessive heat and store in the Glorious Hair box between wears to keep it soft and glossy.';
+  const TABS=[
+    ['Description', `<p>${line.description}</p>`],
+    ['Features', '<ul class="space-y-2">'+line.features.map(f=>`<li class="flex gap-2"><span class="text-glory-600">✓</span><span>${f}</span></li>`).join('')+'</ul>'],
+    ['Specs', '<dl class="grid sm:grid-cols-2 gap-x-8 gap-y-2">'+Object.entries(line.specs).map(([k,v])=>`<div class="flex justify-between border-b border-glory-50 py-1.5"><dt class="text-ink/50">${k}</dt><dd class="font-medium text-ink">${v}</dd></div>`).join('')+'</dl>'],
+    ['Care', `<p>${care}</p>`],
+  ];
+  $('tabBtns').innerHTML = TABS.map((t,i)=>`<button data-t="${i}" class="tabb px-4 py-2 rounded-full transition ${i===0?'bg-ink text-white':'border border-ink/15 hover:border-glory-500'}">${t[0]}</button>`).join('');
+  function showTab(i){ $('tabBody').innerHTML=TABS[i][1];
+    $('tabBtns').querySelectorAll('.tabb').forEach((b,j)=>{ const on=j===i; b.classList.toggle('bg-ink',on); b.classList.toggle('text-white',on); b.classList.toggle('border',!on); b.classList.toggle('border-ink/15',!on); }); }
+  $('tabBtns').querySelectorAll('.tabb').forEach(b=>b.onclick=()=>showTab(+b.dataset.t));
+  showTab(0);
+
+  render();
+
+  // related
+  $('related').innerHTML = PRODUCTS.filter(x=>x.id!==p.id).slice(0,4).map(GHUI.productCard).join('');
+}
+</script>
+</body>
+</html>
