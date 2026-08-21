@@ -87,6 +87,7 @@
   <a href="${wa('Hi Glorious Hair!')}" target="_blank" rel="noopener" class="fixed bottom-6 right-6 z-[60] w-14 h-14 grid place-items-center rounded-full bg-[#25D366] text-white shadow-glow hover:scale-110 transition float" aria-label="Chat on WhatsApp">
     <i class="fa-brands fa-whatsapp text-3xl"></i></a>
   <button id="toTop" class="fixed bottom-6 left-6 z-[60] w-11 h-11 grid place-items-center rounded-full bg-ink text-white shadow-soft opacity-0 pointer-events-none transition hover:bg-glory-600" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="scrollbar"></div>
   <div id="gh-toast"></div>`;
 
   document.body.insertAdjacentHTML('afterbegin', header);
@@ -103,12 +104,13 @@
   document.addEventListener('gh:cart', paintBadge); paintBadge();
 
   /* ---------- header scroll / mobile menu / toTop ---------- */
-  const headerEl=document.getElementById('header'), navEl=headerEl.querySelector('nav'), toTop=document.getElementById('toTop');
+  const headerEl=document.getElementById('header'), navEl=headerEl.querySelector('nav'), toTop=document.getElementById('toTop'), bar=document.getElementById('scrollbar');
   addEventListener('scroll',()=>{ const y=scrollY;
     headerEl.classList.toggle('top-3', y>60); headerEl.classList.toggle('top-11', y<=60);
     navEl.classList.toggle('shadow-glow', y>60);
     toTop.classList.toggle('opacity-0', y<400); toTop.classList.toggle('pointer-events-none', y<400);
-  });
+    const h=document.documentElement.scrollHeight-innerHeight; if(bar) bar.style.width=(h>0?(y/h*100):0)+'%';
+  },{passive:true});
   const mm=document.getElementById('mobileMenu');
   document.getElementById('menuBtn').onclick=()=>{mm.classList.remove('hidden');mm.classList.add('flex');};
   document.getElementById('menuClose').onclick=()=>{mm.classList.add('hidden');mm.classList.remove('flex');};
@@ -133,16 +135,33 @@
     gsap.registerPlugin(ScrollTrigger);
     const rm = matchMedia('(prefers-reduced-motion:reduce)').matches;
     if(rm){
-      document.querySelectorAll('.reveal,[data-hero]').forEach(el=>el.style.opacity=1);
+      document.querySelectorAll('.reveal,[data-hero],[data-stagger] > *').forEach(el=>{el.style.opacity=1;el.style.filter='none';el.style.transform='none';});
       document.querySelectorAll('[data-count]').forEach(el=>el.textContent=el.dataset.count);
       return;
     }
-    gsap.fromTo('[data-hero]',{opacity:0,y:24},{opacity:1,y:0,duration:.9,stagger:.12,ease:'power3.out'});
-    gsap.utils.toArray('.reveal').forEach(el=>gsap.fromTo(el,{opacity:0,y:28},{opacity:1,y:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none reverse'}}));
+    // hero entrance
+    gsap.fromTo('[data-hero]',{opacity:0,y:26},{opacity:1,y:0,duration:1,stagger:.12,ease:'power3.out'});
+    // scroll reveals with variants — data-anim: up (default) | left | right | scale | blur
+    const fromOf = el=>{ const a=el.dataset.anim;
+      if(a==='left') return {opacity:0,x:-46}; if(a==='right') return {opacity:0,x:46};
+      if(a==='scale') return {opacity:0,scale:.9}; if(a==='blur') return {opacity:0,y:24,filter:'blur(10px)'};
+      return {opacity:0,y:34}; };
+    gsap.utils.toArray('.reveal').forEach(el=>gsap.fromTo(el, fromOf(el),
+      {opacity:1,x:0,y:0,scale:1,filter:'blur(0px)',duration:1,ease:'power3.out',
+       scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'}}));
+    // staggered grids (cards cascade in)
+    gsap.utils.toArray('[data-stagger]').forEach(grid=>gsap.fromTo(grid.children,{opacity:0,y:34},
+      {opacity:1,y:0,duration:.8,ease:'power3.out',stagger:.08,
+       scrollTrigger:{trigger:grid,start:'top 85%',toggleActions:'play none none reverse'}}));
+    // counters
     gsap.utils.toArray('[data-count]').forEach(el=>{ const end=+el.dataset.count,o={v:0};
-      gsap.to(o,{v:end,duration:1.6,ease:'power1.out',onUpdate(){el.textContent=Math.round(o.v);},scrollTrigger:{trigger:el,start:'top 95%',once:true}}); });
+      gsap.to(o,{v:end,duration:1.8,ease:'power1.out',onUpdate(){el.textContent=Math.round(o.v);},scrollTrigger:{trigger:el,start:'top 95%',once:true}}); });
+    // generic parallax — data-parallax = drift % (negative for upward)
+    gsap.utils.toArray('[data-parallax]').forEach(el=>{ const sp=parseFloat(el.dataset.parallax)||10;
+      gsap.to(el,{yPercent:sp,ease:'none',scrollTrigger:{trigger:el.parentElement||el,scrub:.6}}); });
     const px=document.getElementById('parallaxImg');
-    if(px) gsap.to(px,{yPercent:12,ease:'none',scrollTrigger:{trigger:px,scrub:.5}});
+    if(px) gsap.to(px,{yPercent:14,ease:'none',scrollTrigger:{trigger:px,scrub:.5}});
+    ScrollTrigger.refresh();
   });
 
   /* ---------- shared premium product card ---------- */
@@ -150,18 +169,21 @@
     return GH.COLORS.slice(0,max||5).map(c=>`<span class="w-4 h-4 rounded-full border border-black/10 ring-1 ring-white" style="background:${c.hex}" title="${c.name}"></span>`).join('');
   }
   function productCard(p){
-    const line = GH.lineOf(p), from = GH.minPrice(line);
-    return `<article class="group reveal">
-      <a href="product.html?id=${p.id}" class="block relative rounded-3xl overflow-hidden shadow-soft sheen bg-white">
-        <img src="${p.img}" alt="${p.title}" loading="lazy" class="w-full aspect-[4/5] object-cover group-hover:scale-105 transition duration-700">
-        <span class="absolute top-3 left-3 bg-glory-600 text-white text-[11px] px-3 py-1 rounded-full font-body tracking-wide">${p.badge}</span>
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-ink text-[11px] px-2.5 py-1 rounded-full font-body">★ ${p.rating}</span>
-        <span class="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-ink/50 to-transparent opacity-0 group-hover:opacity-100 transition"></span>
-        <span class="absolute bottom-3 left-1/2 -translate-x-1/2 translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition bg-white text-ink text-sm px-5 py-2 rounded-full font-body shadow-soft whitespace-nowrap">View product →</span>
-      </a>
+    const line = GH.lineOf(p), from = GH.minPrice(line), def = GH.colorBy(p.color);
+    const swatches = GH.COLORS.map(c=>`<button type="button" class="card-swatch w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-black/10 transition hover:scale-110${c.id===def.id?' is-active':''}" style="background:${c.hex}" data-color="${c.id}" data-img="${c.img}" title="${c.name}" aria-label="${c.name}"></button>`).join('');
+    return `<article class="product-card group" data-pid="${p.id}" data-color="${def.id}">
+      <div class="relative rounded-3xl overflow-hidden shadow-soft sheen bg-white">
+        <a href="product.html?id=${p.id}" class="block"><img class="card-img w-full aspect-[4/5] object-cover group-hover:scale-105 transition duration-700" src="${p.img}" alt="${p.title}" loading="lazy"></a>
+        <span class="absolute top-3 left-3 bg-glory-600 text-white text-[11px] px-3 py-1 rounded-full font-body tracking-wide pointer-events-none">${p.badge}</span>
+        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-ink text-[11px] px-2.5 py-1 rounded-full font-body pointer-events-none">★ ${p.rating}</span>
+        <a href="product.html?id=${p.id}" class="absolute bottom-3 left-1/2 -translate-x-1/2 translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition bg-white text-ink text-sm px-5 py-2 rounded-full font-body shadow-soft whitespace-nowrap">View full →</a>
+      </div>
       <div class="mt-4">
         <h3 class="font-display text-lg sm:text-xl leading-tight">${p.title}</h3>
-        <div class="flex items-center gap-1.5 mt-2">${colorDots(6)}</div>
+        <div class="flex items-center justify-between gap-2 mt-2">
+          <div class="flex items-center gap-1.5 card-swatches">${swatches}</div>
+          <span class="card-colorname hidden sm:block text-ink/45 text-[11px] font-body truncate">${def.name}</span>
+        </div>
         <div class="mt-2 font-display text-xl sm:text-2xl text-glory-600">from ${GH.R(from)}</div>
         <div class="text-ink/40 text-[11px] sm:text-xs font-body mt-0.5">${p.sold.toLocaleString('en-ZA')}+ sold · ${line.sizes.length} lengths</div>
       </div>
@@ -171,12 +193,36 @@
       </div>
     </article>`;
   }
-  // quick-add handler (delegated)
-  document.addEventListener('click',e=>{ const b=e.target.closest('[data-qadd]'); if(!b)return;
-    const p=GH.productBy(b.dataset.qadd), line=GH.lineOf(p), s=line.sizes[0], col=GH.colorBy(p.color);
-    GH.cart.add({name:p.title, cat:line.cat, length:s.label, color:col.name, price:s.price, img:p.img});
-    window.ghToast(`Added ${p.title} · ${s.label} 💕`);
+  // change colour right on a card (swaps the image — no need to open the product)
+  document.addEventListener('click',e=>{ const sw=e.target.closest('.card-swatch'); if(!sw) return;
+    const card=sw.closest('[data-pid]'); if(!card) return;
+    card.dataset.color=sw.dataset.color;
+    const img=card.querySelector('.card-img'); if(img) img.src=sw.dataset.img;
+    card.querySelectorAll('.card-swatch').forEach(x=>x.classList.remove('is-active')); sw.classList.add('is-active');
+    const nm=card.querySelector('.card-colorname'); if(nm) nm.textContent=sw.title;
   });
+  // quick-add (uses the colour currently selected on the card)
+  document.addEventListener('click',e=>{ const b=e.target.closest('[data-qadd]'); if(!b)return;
+    const p=GH.productBy(b.dataset.qadd), line=GH.lineOf(p), s=line.sizes[0], card=b.closest('[data-pid]');
+    const col=(card && GH.COLORS.find(c=>c.id===card.dataset.color)) || GH.colorBy(p.color);
+    GH.cart.add({name:p.title, cat:line.cat, length:s.label, color:col.name, price:s.price, img:col.img});
+    window.ghToast(`Added ${p.title} · ${col.name} 💕`);
+  });
+
+  /* ---------- SEO: structured data + canonical ---------- */
+  try{
+    const ld = {
+      "@context":"https://schema.org","@type":"HairSalon","name":"Glorious Hair","slogan":"We Serve Quality",
+      "description":"Premium 100% human-hair wigs — full frontal, glueless & curly. Choose your colour and length. Nationwide delivery and 3-month lay-by across South Africa.",
+      "image": location.origin+"/assets/images/Philile-removebg-preview.png",
+      "url": location.origin+"/", "telephone":"+27737752813", "priceRange":"R1900–R4700",
+      "areaServed":{"@type":"Country","name":"South Africa"},
+      "founder":{"@type":"Person","name":"Philile Nduli"},
+      "makesOffer":{"@type":"Offer","itemOffered":{"@type":"Product","name":"Human-hair wigs"},"priceCurrency":"ZAR"}
+    };
+    const s=document.createElement('script'); s.type='application/ld+json'; s.textContent=JSON.stringify(ld); document.head.appendChild(s);
+    const can=document.createElement('link'); can.rel='canonical'; can.href=location.origin+location.pathname; document.head.appendChild(can);
+  }catch(e){}
 
   /* expose helpers for page scripts */
   window.GHUI = { wa, page, productCard, colorDots };

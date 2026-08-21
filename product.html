@@ -93,7 +93,7 @@
   <!-- RELATED -->
   <section id="relatedWrap" class="mt-24">
     <div class="flex items-end justify-between mb-8"><h2 class="font-display text-3xl sm:text-4xl font-semibold">You may also love</h2><a href="shop.html" class="font-body text-glory-600 hover:text-glory-700">Shop all →</a></div>
-    <div id="related" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    <div id="related" data-stagger class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"></div>
   </section>
 </main>
 
@@ -172,6 +172,22 @@ else {
 
   // related
   $('related').innerHTML = PRODUCTS.filter(x=>x.id!==p.id).slice(0,4).map(GHUI.productCard).join('');
+
+  // SEO: Product + breadcrumb structured data
+  try{
+    const lo=Math.min(...line.sizes.map(s=>s.price)), hi=Math.max(...line.sizes.map(s=>s.price));
+    const prodLd={"@context":"https://schema.org","@type":"Product","name":p.title,
+      "image":p.gallery,"description":line.description,"category":line.name,
+      "brand":{"@type":"Brand","name":"Glorious Hair"},"material":"100% human hair",
+      "aggregateRating":{"@type":"AggregateRating","ratingValue":p.rating,"reviewCount":p.sold},
+      "offers":{"@type":"AggregateOffer","priceCurrency":"ZAR","lowPrice":lo,"highPrice":hi,"availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Glorious Hair"}}};
+    const crumbs={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":location.origin+"/"},
+      {"@type":"ListItem","position":2,"name":"Shop","item":location.origin+"/shop.html"},
+      {"@type":"ListItem","position":3,"name":p.title}]};
+    [prodLd,crumbs].forEach(o=>{const s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(o);document.head.appendChild(s);});
+    document.querySelector('meta[name="description"]')?.setAttribute('content', `${p.title} — ${line.description.slice(0,120)}… From ${R(lo)}. Choose your colour & length. Glorious Hair, South Africa.`);
+  }catch(e){}
 }
 </script>
 </body>
