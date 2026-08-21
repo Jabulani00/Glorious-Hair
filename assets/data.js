@@ -7,56 +7,81 @@ window.GH = (function(){
   const FOUNDER = { name:'Philile Nduli', role:'Founder', img:'assets/founder.jpg', fallback:px(36338866,900) };
 
   // Colour options (image shown when the shade is selected)
+  // Colour options. `img` (a wig product photo) is shown when the shade is picked;
+  // shades without a dedicated wig photo keep the product's own wig image.
   const COLORS = [
-    {id:'black',    name:'Natural Black',  hex:'#141013', img:px(6923383)},
-    {id:'espresso', name:'Espresso Brown', hex:'#4A2C1A', img:px(36720012)},
-    {id:'honey',    name:'Honey Blonde',   hex:'#C8894B', img:px(1850585)},
-    {id:'burgundy', name:'Burgundy',       hex:'#6E1226', img:px(91218)},
-    {id:'cherry',   name:'Cherry Red',     hex:'#C0143C', img:px(9862639)},
-    {id:'platinum', name:'Platinum',       hex:'#E7E1D8', img:px(13221799)},
+    {id:'black',    name:'Natural Black',  hex:'#141013', img:px(17320162)},
+    {id:'espresso', name:'Espresso Brown', hex:'#4A2C1A', img:px(6923259)},
+    {id:'honey',    name:'Honey Blonde',   hex:'#C8894B', img:px(14730872)},
+    {id:'platinum', name:'Platinum',       hex:'#E7E1D8', img:px(11262176)},
+    {id:'burgundy', name:'Burgundy',       hex:'#6E1226'},
+    {id:'cherry',   name:'Cherry Red',     hex:'#C0143C'},
   ];
   const colorBy = n => COLORS.find(c=>c.name===n) || COLORS[0];
 
   // Real price list (official Glorious Hair flyer) + rich content
   const CATALOGUE = [
-    { id:'frontal', name:'Full Frontal Wigs', cat:'frontal', badge:'Premium', img:px(6923383),
+    { id:'frontal', name:'Full Frontal Wigs', cat:'frontal', badge:'Premium', img:px(17320162),
       blurb:'Pre-plucked HD lace frontal, natural hairline, styled any way.',
       description:'Our signature full frontal wig gives you a flawless, undetectable hairline from ear to ear. Hand-tied on breathable HD lace and pre-plucked with baby hairs, it parts anywhere and styles into a sleek ponytail, half-up, or a bouncy blowout. 100% raw human hair that lasts season after season.',
       features:['13×4 HD transparent lace frontal','Pre-plucked natural hairline + baby hairs','200% density — full from root to tip','Bleached knots, ready to install','Can be washed, curled, straightened & dyed'],
       specs:{'Hair type':'100% raw human hair','Lace':'13×4 HD transparent','Density':'200%','Cap':'Medium, adjustable straps','Lengths':'20″ – 28″'},
       sizes:[{label:'20"',price:3300},{label:'22"',price:3600},{label:'24"',price:4100},{label:'26"',price:4400},{label:'28"',price:4700}] },
 
-    { id:'glueless', name:'Glueless Wigs', cat:'glueless', badge:'Bestseller', img:px(36720012),
+    { id:'glueless', name:'Glueless Wigs', cat:'glueless', badge:'Bestseller', img:px(11262176),
       blurb:'Beginner-friendly, no glue needed. Secure, comfy, ready to wear.',
       description:'The everyday queen\'s favourite. This glueless wig clicks in with adjustable straps and combs — no glue, no gel, no stress. Pre-styled and ready to wear in minutes, it\'s the perfect grab-and-go for work, church or a night out, while still looking completely natural.',
       features:['Truly glueless — straps + combs, no adhesive','Pre-plucked & pre-styled, wear in minutes','Beginner friendly, gentle on your edges','Lightweight, breathable cap','Reusable daily — install & remove yourself'],
       specs:{'Hair type':'100% human hair','Lace':'4×4 closure','Install':'Glueless (straps & combs)','Cap':'Adjustable, elastic band','Lengths':'10″ – 16″'},
       sizes:[{label:'10"',price:2000},{label:'12"',price:2200},{label:'14"',price:2500},{label:'16"',price:2700}] },
 
-    { id:'curly', name:'Curly Wigs', cat:'curly', badge:'Trending', img:px(33930153),
+    { id:'curly', name:'Curly Wigs', cat:'curly', badge:'Trending', img:px(6923450),
       blurb:'Bouncy defined curls with body and shine. Full, natural volume.',
       description:'Big, bouncy, unapologetic curls. Each unit holds a springy, defined curl pattern with incredible volume and shine that bounces back after every wash. Spritz with water to revive the curls — no heat needed. The showstopper that turns every head in the room.',
       features:['Defined, springy curl pattern','Huge natural volume & body','Water-activated — curls revive with a spritz','Soft, tangle-free & full to the ends','100% human hair, can be coloured'],
       specs:{'Hair type':'100% human hair','Texture':'Curly / afro-kinky','Density':'200%','Cap':'Adjustable, combs','Lengths':'10″ – 20″'},
       sizes:[{label:'10"',price:1900},{label:'12"',price:2300},{label:'14"',price:2700},{label:'16"',price:3000},{label:'18"',price:3500},{label:'20"',price:3800}] },
+
+    { id:'bob', name:'Bob Wigs', cat:'bob', badge:'Chic', img:px(17320163),
+      blurb:'Chic, timeless bob that frames the face. Light and easy to style.',
+      description:'A chic, timeless bob that frames the face beautifully. Lightweight and effortlessly elegant, it\'s the low-maintenance everyday look that never goes out of style — sleek straight or with a soft inward curve.',
+      features:['Face-framing blunt or C-curl bob','Lightweight & comfy all day','Pre-styled, minimal maintenance','Beginner-friendly to install','100% human hair — restyle any way'],
+      specs:{'Hair type':'100% human hair','Style':'Straight bob','Density':'180%','Cap':'Adjustable, combs','Lengths':'8″ – 14″'},
+      sizes:[{label:'8"',price:1500},{label:'10"',price:1700},{label:'12"',price:2000},{label:'14"',price:2400}] },
+
+    { id:'lace', name:'HD Lace Wigs', cat:'lace', badge:'Undetectable', img:px(17362828),
+      blurb:'Invisible HD melt lace for the most natural hairline yet.',
+      description:'Our most natural hairline yet. Ultra-thin HD melt lace disappears into the skin for a truly invisible, undetectable finish. Pre-plucked with baby hairs and bleached knots — installed right, no one will ever know it\'s a wig.',
+      features:['Ultra-thin HD melt lace','Invisible, skin-matching hairline','Pre-plucked + bleached knots','Baby hairs for a natural finish','100% human hair, glue or glueless'],
+      specs:{'Hair type':'100% human hair','Lace':'HD melt lace','Density':'200%','Cap':'Adjustable straps','Lengths':'12″ – 20″'},
+      sizes:[{label:'12"',price:2800},{label:'14"',price:3100},{label:'16"',price:3500},{label:'18"',price:3900},{label:'20"',price:4200}] },
+
+    { id:'ponytail', name:'Ponytails', cat:'ponytail', badge:'Quick Glam', img:px(6923222),
+      blurb:'Instant length & volume — a sleek drawstring pony in seconds.',
+      description:'Instant length and glam in seconds. This drawstring ponytail wraps and clips over your own hair for a sleek, high pony or a bouncy blow-out finish — no salon, no fuss. The easiest way to switch up your look.',
+      features:['Drawstring + clip-in, wear in seconds','Adds instant length & volume','Wrap-around natural finish','Great for gym-to-glam days','100% human hair — heat friendly'],
+      specs:{'Hair type':'100% human hair','Attach':'Drawstring & clips','Style':'Wrap ponytail','Cap':'One size, adjustable','Lengths':'16″ – 26″'},
+      sizes:[{label:'16"',price:650},{label:'20"',price:850},{label:'24"',price:1100},{label:'26"',price:1300}] },
   ];
   const byId = id => CATALOGUE.find(p=>p.id===id);
   const minPrice = p => Math.min(...p.sizes.map(s=>s.price));
 
   // Store-front products (cards + single product pages). `line` links to a CATALOGUE entry for pricing.
   const PRODUCTS = [
-    { id:'full-frontal', line:'frontal', title:'Full Frontal Wig',  color:'Natural Black',  badge:'Premium',   rating:4.9, sold:812,
-      img:px(6923383), gallery:[px(6923383),px(720358),px(13871638),px(29204263)] },
-    { id:'glueless',     line:'glueless', title:'Glueless Wig',      color:'Espresso Brown', badge:'Bestseller',rating:4.8, sold:1240,
-      img:px(36720012), gallery:[px(36720012),px(6923266),px(36338866),px(34786943)] },
-    { id:'curly',        line:'curly',   title:'Curly Wig',          color:'Natural Black',  badge:'Trending',  rating:4.9, sold:960,
-      img:px(33930153), gallery:[px(33930153),px(6923450),px(6923266),px(6923437)] },
-    { id:'cherry-curly', line:'curly',   title:'Cherry Red Curly Wig',color:'Cherry Red',    badge:'Colour Pop',rating:4.7, sold:318,
-      img:px(9862639), gallery:[px(9862639),px(33930153),px(6923266)] },
-    { id:'platinum-afro',line:'curly',   title:'Platinum Afro Wig',  color:'Platinum',       badge:'Editorial', rating:4.9, sold:274,
-      img:px(13221799), gallery:[px(13221799),px(13221796),px(13221800),px(13221802)] },
-    { id:'copper-glam',  line:'glueless',title:'Copper Glam Glueless',color:'Espresso Brown',badge:'New',       rating:4.8, sold:190,
-      img:px(36338866), gallery:[px(36338866),px(36720012),px(29204263)] },
+    { id:'full-frontal', line:'frontal', title:'Full Frontal Wig', color:'Natural Black', badge:'Premium', rating:4.9, sold:812,
+      img:px(17320162), gallery:[px(17320162),px(11262176),px(6923259),px(13074451)] },
+    { id:'glueless', line:'glueless', title:'Glueless Wig', color:'Natural Black', badge:'Bestseller', rating:4.8, sold:1240,
+      img:px(11262176), gallery:[px(11262176),px(13074451),px(14730872),px(6923259)] },
+    { id:'curly', line:'curly', title:'Curly Wig', color:'Natural Black', badge:'Trending', rating:4.9, sold:960,
+      img:px(6923450), gallery:[px(6923450),px(6923437),px(13074451),px(12618341)] },
+    { id:'hd-lace', line:'lace', title:'HD Lace Wig', color:'Natural Black', badge:'Undetectable', rating:5.0, sold:410,
+      img:px(17362828), gallery:[px(17362828),px(13074451),px(17320163),px(11262176)] },
+    { id:'bob', line:'bob', title:'Bob Wig', color:'Espresso Brown', badge:'Chic', rating:4.8, sold:540,
+      img:px(17320163), gallery:[px(17320163),px(17320164),px(13074451),px(6923259)] },
+    { id:'ponytail', line:'ponytail', title:'Sleek Ponytail', color:'Natural Black', badge:'Quick Glam', rating:4.7, sold:880,
+      img:px(6923222), gallery:[px(6923222),px(6923512),px(13074451)] },
+    { id:'colour-pop', line:'curly', title:'Colour Pop Curly Wig', color:'Cherry Red', badge:'Colour Pop', rating:4.6, sold:220,
+      img:px(4724468), gallery:[px(4724468),px(6923450),px(6923437)] },
   ];
   const productBy = id => PRODUCTS.find(p=>p.id===id);
   const lineOf = p => byId(p.line);

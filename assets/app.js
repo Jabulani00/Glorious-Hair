@@ -170,7 +170,7 @@
   }
   function productCard(p){
     const line = GH.lineOf(p), from = GH.minPrice(line), def = GH.colorBy(p.color);
-    const swatches = GH.COLORS.map(c=>`<button type="button" class="card-swatch w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-black/10 transition hover:scale-110${c.id===def.id?' is-active':''}" style="background:${c.hex}" data-color="${c.id}" data-img="${c.img}" title="${c.name}" aria-label="${c.name}"></button>`).join('');
+    const swatches = GH.COLORS.map(c=>`<button type="button" class="card-swatch w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-black/10 transition hover:scale-110${c.id===def.id?' is-active':''}" style="background:${c.hex}" data-color="${c.id}" data-img="${c.img||''}" title="${c.name}" aria-label="${c.name}"></button>`).join('');
     return `<article class="product-card group" data-pid="${p.id}" data-color="${def.id}">
       <div class="relative rounded-3xl overflow-hidden shadow-soft sheen bg-white">
         <a href="product.html?id=${p.id}" class="block"><img class="card-img w-full aspect-[4/5] object-cover group-hover:scale-105 transition duration-700" src="${p.img}" alt="${p.title}" loading="lazy"></a>
@@ -197,7 +197,7 @@
   document.addEventListener('click',e=>{ const sw=e.target.closest('.card-swatch'); if(!sw) return;
     const card=sw.closest('[data-pid]'); if(!card) return;
     card.dataset.color=sw.dataset.color;
-    const img=card.querySelector('.card-img'); if(img) img.src=sw.dataset.img;
+    const img=card.querySelector('.card-img'); if(img && sw.dataset.img) img.src=sw.dataset.img;
     card.querySelectorAll('.card-swatch').forEach(x=>x.classList.remove('is-active')); sw.classList.add('is-active');
     const nm=card.querySelector('.card-colorname'); if(nm) nm.textContent=sw.title;
   });
@@ -205,7 +205,7 @@
   document.addEventListener('click',e=>{ const b=e.target.closest('[data-qadd]'); if(!b)return;
     const p=GH.productBy(b.dataset.qadd), line=GH.lineOf(p), s=line.sizes[0], card=b.closest('[data-pid]');
     const col=(card && GH.COLORS.find(c=>c.id===card.dataset.color)) || GH.colorBy(p.color);
-    GH.cart.add({name:p.title, cat:line.cat, length:s.label, color:col.name, price:s.price, img:col.img});
+    GH.cart.add({name:p.title, cat:line.cat, length:s.label, color:col.name, price:s.price, img:col.img||p.img});
     window.ghToast(`Added ${p.title} · ${col.name} 💕`);
   });
 

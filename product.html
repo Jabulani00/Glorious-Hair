@@ -140,9 +140,8 @@ else {
   $('pSwatches').innerHTML = COLORS.map(c=>`<button data-c="${c.id}" title="${c.name}" class="pw swatch w-9 h-9 rounded-full border border-black/10 transition ${c.id===st.color.id?'active':''}" style="background:${c.hex}"></button>`).join('');
   $('pSwatches').querySelectorAll('.pw').forEach(b=>b.onclick=()=>{ st.color=COLORS.find(x=>x.id===b.dataset.c);
     $('pSwatches').querySelectorAll('.pw').forEach(x=>x.classList.remove('active')); b.classList.add('active');
-    setMain(st.color.img);
-    // sync thumb ring off
-    $('thumbs').querySelectorAll('.thumb').forEach(x=>{x.classList.remove('ring-2','ring-glory-600');x.classList.add('ring-1','ring-black/5');});
+    if(st.color.img){ setMain(st.color.img);
+      $('thumbs').querySelectorAll('.thumb').forEach(x=>{x.classList.remove('ring-2','ring-glory-600');x.classList.add('ring-1','ring-black/5');}); }
     render(); });
   // sizes
   $('pSizes').innerHTML = line.sizes.map((s,i)=>`<button data-i="${i}" class="ps size-btn px-4 py-2 rounded-full border border-ink/20 font-body text-sm transition ${i===0?'active':''}">${s.label} <span class="opacity-60">· ${R(s.price)}</span></button>`).join('');
