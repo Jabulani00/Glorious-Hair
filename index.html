@@ -82,25 +82,82 @@
       <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-1">Build Your Perfect Look</h2>
       <p class="text-ink/60 mt-4 font-body">Choose your line, shade and length — the price updates live from our real price list. Add to cart or order on WhatsApp.</p>
     </div>
-    <div class="grid lg:grid-cols-2 gap-10 items-center bg-white rounded-[2.5rem] shadow-soft p-6 sm:p-10 reveal">
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch bg-white rounded-[2.5rem] shadow-soft p-5 sm:p-8 reveal relative overflow-hidden">
+      <div class="pointer-events-none absolute -top-16 -right-16 w-56 h-56 bg-glory-200/40 blur-3xl rounded-full"></div>
+
+      <!-- LEFT: live preview -->
       <div class="relative">
-        <div class="absolute -inset-3 bg-glory-100 rounded-[2rem] blob"></div>
-        <img id="cfgImg" src="https://images.pexels.com/photos/1850585/pexels-photo-1850585.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Selected style" class="relative w-full h-[30rem] object-cover rounded-[2rem] shadow-soft transition-all duration-500">
-        <span class="absolute top-4 left-4 bg-ink text-white text-xs px-3 py-1.5 rounded-full font-body">✦ Premium Grade 12A</span>
-      </div>
-      <div>
-        <!-- line tabs -->
-        <div id="cfgLines" class="flex flex-wrap gap-2 mb-4"></div>
-        <h3 id="cfgName" class="font-display text-3xl font-semibold">Glueless Wig — Honey Blonde</h3>
-        <div class="flex items-center gap-3 mt-2"><div class="flex text-glory-500">★★★★★</div><span class="text-ink/50 text-sm font-body">4.9 · loved by 800+ queens</span></div>
-        <div class="mt-5 flex items-end gap-3"><span id="cfgPrice" class="font-display text-4xl font-semibold text-glory-600">R2 000</span><span class="mb-1 text-xs bg-glory-100 text-glory-700 px-2 py-0.5 rounded-full font-body">Lay-by from R667/mo</span></div>
-        <div class="mt-7"><div class="flex items-center justify-between"><span class="font-body text-sm uppercase tracking-widest text-ink/60">Colour</span><span id="cfgColorName" class="font-body text-sm text-ink/80">Honey Blonde</span></div><div id="swatches" class="flex flex-wrap gap-3 mt-3"></div></div>
-        <div class="mt-7"><div class="flex items-center justify-between"><span class="font-body text-sm uppercase tracking-widest text-ink/60">Length</span><span class="font-body text-xs text-ink/40">real price list</span></div><div id="sizes" class="flex flex-wrap gap-2.5 mt-3"></div></div>
-        <div class="mt-8 flex flex-col sm:flex-row gap-3">
-          <button id="addCart" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-glory-600 hover:bg-glory-500 text-white font-body shadow-glow transition">Add to Cart — <span id="cfgBtnPrice">R2 000</span></button>
-          <a id="waOrder" href="#" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border-2 border-ink text-ink font-body hover:bg-ink hover:text-white transition"><i class="fa-brands fa-whatsapp text-lg"></i> Order on WhatsApp</a>
+        <div class="absolute -inset-2 bg-gradient-to-br from-glory-200 to-glory-50 rounded-[2rem] blob"></div>
+        <div class="relative rounded-[2rem] overflow-hidden shadow-soft h-full min-h-[24rem]">
+          <img id="cfgImg" src="https://images.pexels.com/photos/6923383/pexels-photo-6923383.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Live preview of your wig" class="w-full h-full object-cover transition-all duration-500">
+          <div class="absolute inset-x-0 top-0 p-4 flex items-start justify-between">
+            <span class="bg-ink/80 backdrop-blur text-white text-xs px-3 py-1.5 rounded-full font-body"><i class="fa-solid fa-gem text-glory-300"></i> Premium 12A</span>
+            <span class="bg-white/85 backdrop-blur text-ink text-xs px-3 py-1.5 rounded-full font-body flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Live preview</span>
+          </div>
+          <div class="absolute inset-x-3 bottom-3 bg-white/85 backdrop-blur rounded-2xl px-4 py-3 flex items-center justify-between">
+            <div class="min-w-0"><div id="cfgName" class="font-display text-lg leading-tight truncate">Full Frontal Wig</div><div id="cfgSub" class="text-ink/55 text-xs font-body truncate">Natural Black · 20″</div></div>
+            <div class="text-right shrink-0 pl-3"><div class="text-[10px] uppercase tracking-widest text-ink/40">Total</div><div id="cfgPrice" class="font-display text-2xl text-glory-600 leading-none">R3 300</div></div>
+          </div>
         </div>
-        <div class="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-xs text-ink/55 font-body"><span>✓ Nationwide delivery</span><span>✓ 3-month lay-by</span><span>✓ Real human hair</span></div>
+      </div>
+
+      <!-- RIGHT: builder -->
+      <div class="relative">
+        <div class="flex items-center gap-2 text-glory-500 mb-1"><div class="flex">★★★★★</div><span class="text-ink/50 text-sm font-body">4.9 · loved by 800+ queens</span></div>
+
+        <!-- Step 1: style -->
+        <div class="mt-4">
+          <div class="text-[13px] font-body uppercase tracking-widest text-ink/50 flex items-center gap-2"><span class="w-5 h-5 grid place-items-center rounded-full bg-glory-600 text-white text-[11px]">1</span> Choose your style</div>
+          <div id="cfgLines" class="grid grid-cols-3 gap-2.5 mt-3"></div>
+        </div>
+
+        <!-- Step 2: colour -->
+        <div class="mt-6">
+          <div class="flex items-center justify-between">
+            <div class="text-[13px] font-body uppercase tracking-widest text-ink/50 flex items-center gap-2"><span class="w-5 h-5 grid place-items-center rounded-full bg-glory-600 text-white text-[11px]">2</span> Pick your colour</div>
+            <span id="cfgColorName" class="font-body text-sm text-ink/80">Natural Black</span>
+          </div>
+          <div id="swatches" class="flex flex-wrap gap-3 mt-3"></div>
+        </div>
+
+        <!-- Step 3: length -->
+        <div class="mt-6">
+          <div class="flex items-center justify-between">
+            <div class="text-[13px] font-body uppercase tracking-widest text-ink/50 flex items-center gap-2"><span class="w-5 h-5 grid place-items-center rounded-full bg-glory-600 text-white text-[11px]">3</span> Select length</div>
+            <span id="cfgLenDesc" class="font-body text-sm text-glory-600 font-medium">Chest length</span>
+          </div>
+          <div id="sizes" class="flex flex-wrap gap-2 mt-3"></div>
+          <div class="mt-3 h-2 rounded-full bg-glory-100 overflow-hidden"><div id="cfgLenBar" class="h-full rounded-full bg-gradient-to-r from-glory-400 to-glory-600 transition-all duration-500" style="width:55%"></div></div>
+          <div class="flex justify-between text-[10px] font-body text-ink/40 mt-1"><span><i class="fa-solid fa-scissors"></i> Short 10″</span><span>Waist 30″ <i class="fa-solid fa-wind"></i></span></div>
+        </div>
+
+        <!-- Summary -->
+        <div class="mt-6 rounded-2xl bg-blush border border-glory-100 p-4">
+          <div class="flex items-center justify-between gap-3">
+            <div class="min-w-0"><div class="text-[11px] uppercase tracking-widest text-ink/45 font-body">Your look</div><div id="cfgSummary" class="font-body text-ink/80 text-sm mt-0.5 truncate">Full Frontal Wig · Natural Black · 20″</div></div>
+            <div class="flex items-center rounded-full border border-ink/15 bg-white font-body shrink-0">
+              <button id="cfgMinus" class="w-9 h-9 grid place-items-center hover:text-glory-600" aria-label="Decrease quantity">−</button>
+              <span id="cfgQty" class="w-7 text-center text-sm">1</span>
+              <button id="cfgPlus" class="w-9 h-9 grid place-items-center hover:text-glory-600" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+          <div class="flex items-end justify-between mt-3 pt-3 border-t border-glory-100">
+            <span id="cfgTotal" class="font-display text-3xl font-semibold text-glory-600">R3 300</span>
+            <div class="text-right font-body text-xs text-ink/60">or 3× <b id="cfgLayby" class="text-ink">R1 100</b>/mo lay-by</div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-4 flex flex-col sm:flex-row gap-3">
+          <button id="addCart" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-glory-600 hover:bg-glory-500 text-white font-body shadow-glow transition"><i class="fa-solid fa-bag-shopping"></i> Add to Cart — <span id="cfgBtnPrice">R3 300</span></button>
+          <a id="waOrder" href="#" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border-2 border-ink text-ink font-body hover:bg-ink hover:text-white transition"><i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp</a>
+        </div>
+        <!-- includes -->
+        <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+          <div class="rounded-xl bg-blush py-2.5"><i class="fa-solid fa-box-open text-glory-500"></i><div class="text-[10px] font-body text-ink/55 mt-1">Adjustable cap</div></div>
+          <div class="rounded-xl bg-blush py-2.5"><i class="fa-solid fa-comments text-glory-500"></i><div class="text-[10px] font-body text-ink/55 mt-1">Free style advice</div></div>
+          <div class="rounded-xl bg-blush py-2.5"><i class="fa-solid fa-truck-fast text-glory-500"></i><div class="text-[10px] font-body text-ink/55 mt-1">Nationwide ship</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -111,9 +168,9 @@
   <div class="max-w-7xl mx-auto px-6">
     <div class="flex flex-wrap items-end justify-between gap-6 mb-12 reveal">
       <div><p class="font-script text-3xl text-glory-600">The collection</p><h2 class="font-display text-4xl sm:text-5xl font-semibold mt-1">Shop by Style</h2></div>
-      <a href="shop.html" class="font-body text-glory-600 hover:text-glory-700 transition">View full price list →</a>
+      <a href="shop.html" class="font-body text-glory-600 hover:text-glory-700 transition">View all styles →</a>
     </div>
-    <div id="catGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+    <div id="catGrid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"></div>
   </div>
 </section>
 
@@ -218,45 +275,71 @@
 /* ===== Home page scripts ===== */
 const { COLORS, CATALOGUE, byId, minPrice, R, cart } = GH;
 
-/* Configurator */
-const state = { line: byId('glueless'), color: COLORS[0], size: byId('glueless').sizes[0] };
+/* Configurator — "Build Your Look" studio */
+const state = { line: byId('frontal'), color: COLORS[0], size: byId('frontal').sizes[0], qty:1 };
 const $ = id => document.getElementById(id);
+function lenDesc(inch){
+  if(inch<=12) return 'Chic bob · chin length';
+  if(inch<=16) return 'Shoulder length';
+  if(inch<=20) return 'Chest length';
+  if(inch<=24) return 'Mid-back length';
+  if(inch<=28) return 'Lower-back length';
+  return 'Waist length';
+}
 function priceNow(){ return state.size.price; }
+function total(){ return priceNow()*state.qty; }
 function render(){
+  const inch = parseInt(state.size.label);
   $('cfgImg').src = state.color.img;
-  $('cfgName').textContent = `${state.line.name} — ${state.color.name}`;
+  $('cfgName').textContent = state.line.name;
+  $('cfgSub').textContent = `${state.color.name} · ${state.size.label}`;
   $('cfgColorName').textContent = state.color.name;
-  $('cfgPrice').textContent = R(priceNow());
-  $('cfgBtnPrice').textContent = R(priceNow());
-  const msg = `Hi Glorious Hair! I'd like to order the ${state.line.name} in ${state.color.name}, length ${state.size.label} — ${R(priceNow())}.`;
+  $('cfgPrice').textContent = R(total());
+  $('cfgTotal').textContent = R(total());
+  $('cfgBtnPrice').textContent = R(total());
+  $('cfgLayby').textContent = R(Math.round(total()/3));
+  $('cfgQty').textContent = state.qty;
+  $('cfgSummary').textContent = `${state.line.name} · ${state.color.name} · ${state.size.label}`;
+  $('cfgLenDesc').textContent = lenDesc(inch);
+  $('cfgLenBar').style.width = Math.max(8, Math.round(((inch-8)/(30-8))*100)) + '%';
+  const msg = `Hi Glorious Hair! I'd like to order the ${state.line.name} in ${state.color.name}, length ${state.size.label} ×${state.qty} — ${R(total())}.`;
   $('waOrder').href = 'https://wa.me/'+GH.WA+'?text='+encodeURIComponent(msg);
 }
-// line tabs
+// style cards
 const lineWrap=$('cfgLines');
+function paintLines(){ lineWrap.querySelectorAll('.line-card').forEach(c=>{
+  const on=c.dataset.id===state.line.id;
+  c.classList.toggle('ring-2',on); c.classList.toggle('ring-glory-600',on); c.classList.toggle('ring-offset-2',on);
+  c.classList.toggle('border-transparent',on); c.classList.toggle('border-ink/10',!on); }); }
 CATALOGUE.forEach(l=>{ const b=document.createElement('button');
-  b.className='line-tab px-4 py-2 rounded-full border font-body text-sm transition '+(l.id===state.line.id?'bg-ink text-white border-ink':'border-ink/20 hover:border-glory-500');
-  b.textContent=l.name;
-  b.onclick=()=>{ state.line=l; state.size=l.sizes[0];
-    document.querySelectorAll('.line-tab').forEach(x=>x.classList.remove('bg-ink','text-white','border-ink'));
-    b.classList.add('bg-ink','text-white','border-ink');
-    buildSizes(); render(); };
+  b.className='line-card group text-left rounded-2xl overflow-hidden border border-ink/10 bg-white transition';
+  b.dataset.id=l.id;
+  b.innerHTML=`<div class="relative h-16 sm:h-20 overflow-hidden"><img src="${l.img}" alt="${l.name}" class="w-full h-full object-cover group-hover:scale-105 transition"></div>
+    <div class="px-2 py-1.5"><div class="font-display text-[13px] leading-tight">${l.name.replace(' Wigs','')}</div><div class="text-glory-600 font-body text-[11px]">from ${R(minPrice(l))}</div></div>`;
+  b.onclick=()=>{ state.line=l; state.size=l.sizes[0]; paintLines(); buildSizes(); render(); };
   lineWrap.appendChild(b); });
+paintLines();
 // swatches
 const swWrap=$('swatches');
-COLORS.forEach((c,i)=>{ const b=document.createElement('button');
+COLORS.forEach(c=>{ const b=document.createElement('button');
   b.className='swatch w-9 h-9 rounded-full border border-black/10 transition'+(c.id===state.color.id?' active':'');
   b.style.background=c.hex; b.title=c.name; b.setAttribute('aria-label',c.name);
   b.onclick=()=>{ state.color=c; document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active')); b.classList.add('active'); render(); };
   swWrap.appendChild(b); });
-// sizes
+// sizes (with a "popular" length flag)
 function buildSizes(){ const wrap=$('sizes'); wrap.innerHTML='';
+  const pop = Math.floor(state.line.sizes.length/2);
   state.line.sizes.forEach((s,i)=>{ const b=document.createElement('button');
-    b.className='size-btn px-4 py-2 rounded-full border border-ink/20 font-body text-sm transition'+(s.label===state.size.label?' active':'');
-    b.innerHTML=`${s.label} <span class="opacity-60">· ${R(s.price)}</span>`;
+    b.className='size-btn relative px-3.5 py-2 rounded-full border border-ink/20 font-body text-sm transition'+(s.label===state.size.label?' active':'');
+    b.innerHTML=`${s.label}<span class="opacity-55"> · ${R(s.price)}</span>`+(i===pop?`<span class="absolute -top-2 -right-1 bg-glory-600 text-white text-[8px] leading-none px-1.5 py-0.5 rounded-full">POPULAR</span>`:'');
     b.onclick=()=>{ state.size=s; document.querySelectorAll('.size-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); render(); };
     wrap.appendChild(b); }); }
 buildSizes(); render();
-$('addCart').onclick=()=>{ cart.add({name:state.line.name, cat:state.line.cat, length:state.size.label, color:state.color.name, price:priceNow(), img:state.color.img}); ghToast('Added to cart 💕 '+state.line.name+' '+state.size.label); };
+// quantity
+$('cfgMinus').onclick=()=>{ state.qty=Math.max(1,state.qty-1); render(); };
+$('cfgPlus').onclick=()=>{ state.qty++; render(); };
+// add
+$('addCart').onclick=()=>{ cart.add({name:state.line.name, cat:state.line.cat, length:state.size.label, color:state.color.name, price:priceNow(), img:state.color.img, qty:state.qty}); ghToast(`Added ${state.qty}× ${state.line.name} ${state.size.label} 💕`); };
 
 /* Collection cards (premium product cards) */
 $('catGrid').innerHTML = GH.PRODUCTS.map(GHUI.productCard).join('');

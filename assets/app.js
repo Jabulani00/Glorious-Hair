@@ -66,9 +66,9 @@
           </div>
         </div>
         <div><h4 class="font-display text-xl mb-4">Shop</h4><ul class="space-y-2 text-white/60 font-body text-sm">
-          <li><a href="shop.html#frontal" class="hover:text-glory-300 transition">Full Frontal Wigs</a></li>
-          <li><a href="shop.html#glueless" class="hover:text-glory-300 transition">Glueless Wigs</a></li>
-          <li><a href="shop.html#curly" class="hover:text-glory-300 transition">Curly Wigs</a></li>
+          <li><a href="product.html?id=full-frontal" class="hover:text-glory-300 transition">Full Frontal Wigs</a></li>
+          <li><a href="product.html?id=glueless" class="hover:text-glory-300 transition">Glueless Wigs</a></li>
+          <li><a href="product.html?id=curly" class="hover:text-glory-300 transition">Curly Wigs</a></li>
           <li><a href="index.html#build" class="hover:text-glory-300 transition">Customise</a></li></ul></div>
         <div><h4 class="font-display text-xl mb-4">Help</h4><ul class="space-y-2 text-white/60 font-body text-sm">
           <li><a href="about.html" class="hover:text-glory-300 transition">Our Story</a></li>
