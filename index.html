@@ -26,7 +26,9 @@
 
 <!-- ══ HERO ══ -->
 <section class="relative min-h-[100svh] flex items-center overflow-hidden">
-  <img src="assets/photos/hero-bg.webp" alt="Model wearing a long curly Glorious Hair virgin-hair unit" class="absolute inset-0 w-full h-full object-cover object-center" fetchpriority="high">
+  <video class="gh-video absolute inset-0 w-full h-full object-cover object-center" autoplay muted loop playsinline preload="metadata" poster="assets/photos/hero-bg.webp" aria-hidden="true">
+    <source src="assets/images/videos/glorious_hair_true_landscape_16x9.mp4" type="video/mp4">
+  </video>
   <div class="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/55 to-glory-900/40"></div>
   <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/40"></div>
   <div class="absolute -right-24 top-1/4 w-[38rem] h-[38rem] bg-glory-600/40 blur-3xl blob hidden md:block"></div>
@@ -211,7 +213,9 @@
       <!-- gif feature -->
       <div class="lg:col-span-2 reveal" data-anim="left">
         <div class="relative h-full min-h-[22rem] rounded-[2rem] overflow-hidden border border-white/10 lux-lift">
-          <img src="assets/photos/promo.webp" alt="Long silky Glorious Hair in motion" class="absolute inset-0 w-full h-full object-cover object-top" loading="lazy">
+          <video class="gh-video absolute inset-0 w-full h-full object-cover object-top" autoplay muted loop playsinline preload="none" poster="assets/photos/promo.webp" aria-hidden="true">
+            <source src="assets/images/videos/glorious_hair_face_orbit.mp4" type="video/mp4">
+          </video>
           <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent"></div>
           <span class="absolute top-4 left-4 text-[11px] tracking-widest uppercase bg-white/10 backdrop-blur px-3 py-1.5 rounded-full">✦ Bestseller lengths</span>
           <div class="absolute inset-x-0 bottom-0 p-6"><div class="gold-rule w-16 mb-3"></div><div class="font-script text-4xl text-glory-200">Length that turns heads</div><div class="font-body text-white/70 text-sm mt-1">Curly up to 20″ · Frontals up to 28″</div></div>
@@ -423,6 +427,14 @@ $('newsletter').addEventListener('submit',e=>{ e.preventDefault(); $('newsMsg').
     set('d',pad(Math.floor(d/864e5))); set('h',pad(Math.floor(d%864e5/36e5)));
     set('m',pad(Math.floor(d%36e5/6e4))); set('s',pad(Math.floor(d%6e4/1e3))); }
   tick(); setInterval(tick,1000);
+})();
+
+/* Respect reduced-motion: pause decorative videos, show their poster */
+(function(){
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('video.gh-video').forEach(v=>{
+    v.removeAttribute('autoplay'); v.pause(); v.removeAttribute('loop');
+  });
 })();
 </script>
 </body>
