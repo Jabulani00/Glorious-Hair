@@ -64,4 +64,31 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:44;opa
 .field{width:100%;padding:.85rem 1.1rem;border:1px solid #F3C9DF;border-radius:.9rem;background:#fff;font-family:'Jost';outline:none;transition:.2s;}
 .field:focus{border-color:#E6007E;box-shadow:0 0 0 4px rgba(236,72,153,.15);}
 label.lbl{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#7a5563;font-weight:500;}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}}
+/* ===== Products slider ===== */
+.gh-slider{position:relative;}
+.gh-track{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:.5rem .25rem 1.25rem;scrollbar-width:none;}
+.gh-track::-webkit-scrollbar{height:0;width:0;display:none;}
+.gh-slide{scroll-snap-align:start;flex:0 0 auto;width:80%;}
+@media(min-width:480px){.gh-track{gap:1.25rem;}.gh-slide{width:58%;}}
+@media(min-width:640px){.gh-slide{width:46%;}}
+@media(min-width:768px){.gh-track{gap:1.5rem;}.gh-slide{width:33.333%;}}
+@media(min-width:1024px){.gh-slide{width:25%;}}
+.gh-arrow{position:absolute;top:calc(50% - 3.5rem);z-index:20;width:2.75rem;height:2.75rem;display:grid;place-items:center;border-radius:9999px;background:#fff;color:#0A0A0A;box-shadow:0 20px 60px -20px rgba(10,10,10,.35);transition:opacity .3s,background .3s,color .3s,transform .3s;}
+.gh-arrow:hover{background:#E6007E;color:#fff;transform:scale(1.08);}
+.gh-arrow.is-hidden{opacity:0;pointer-events:none;}
+.gh-prev{left:-.65rem;}
+.gh-next{right:-.65rem;}
+@media(max-width:767px){.gh-arrow{display:none;}}
+/* auto-scroll variant — JS drives a continuous drift, so snapping is off (it pauses on hover/touch) */
+.gh-slider.gh-auto .gh-track{scroll-snap-type:none;}
+/* full-width on desktop — the track breaks out of the centred container and runs edge-to-edge,
+   with a gutter that lines the first card up under the heading */
+@media(min-width:1024px){
+  .gh-slider.gh-full{width:100vw;margin-left:calc(50% - 50vw);}
+  .gh-slider.gh-full .gh-track{padding-left:max(1.5rem,calc(50vw - 34.5rem));padding-right:max(1.5rem,calc(50vw - 34.5rem));}
+  .gh-slider.gh-full .gh-slide{width:clamp(260px,21vw,330px);}
+  .gh-slider.gh-full .gh-prev{left:.9rem;}
+  .gh-slider.gh-full .gh-next{right:.9rem;}
+}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}.gh-track{scroll-behavior:auto;}}

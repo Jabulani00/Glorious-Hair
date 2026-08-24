@@ -173,7 +173,7 @@
     const swatches = GH.COLORS.map(c=>`<button type="button" class="card-swatch w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-black/10 transition hover:scale-110${c.id===def.id?' is-active':''}" style="background:${c.hex}" data-color="${c.id}" data-img="${c.img||''}" title="${c.name}" aria-label="${c.name}"></button>`).join('');
     return `<article class="product-card group" data-pid="${p.id}" data-color="${def.id}">
       <div class="relative rounded-3xl overflow-hidden shadow-soft sheen bg-white">
-        <a href="product.html?id=${p.id}" class="block"><img class="card-img w-full aspect-[4/5] object-cover group-hover:scale-105 transition duration-700" src="${p.img}" alt="${p.title}" loading="lazy"></a>
+        <a href="product.html?id=${p.id}" class="block"><img class="card-img w-full aspect-[4/5] object-cover object-top group-hover:scale-105 transition duration-700" src="${p.img}" alt="${p.title}" loading="lazy"></a>
         <span class="absolute top-3 left-3 bg-glory-600 text-white text-[11px] px-3 py-1 rounded-full font-body tracking-wide pointer-events-none">${p.badge}</span>
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-ink text-[11px] px-2.5 py-1 rounded-full font-body pointer-events-none">★ ${p.rating}</span>
         <a href="product.html?id=${p.id}" class="absolute bottom-3 left-1/2 -translate-x-1/2 translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition bg-white text-ink text-sm px-5 py-2 rounded-full font-body shadow-soft whitespace-nowrap">View full →</a>
@@ -208,6 +208,62 @@
     GH.cart.add({name:p.title, cat:line.cat, length:s.label, color:col.name, price:s.price, img:col.img||p.img});
     window.ghToast(`Added ${p.title} · ${col.name} 💕`);
   });
+
+  /* ---------- products slider (auto-fills any [data-product-slider]) ---------- */
+  // data-product-slider="all"           → every store product
+  // data-product-slider="curly,bob,…"   → a hand-picked list (product ids)
+  function fillSliders(){
+    const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    document.querySelectorAll('[data-product-slider]').forEach(sl=>{
+      const track = sl.querySelector('.gh-track'); if(!track || track.dataset.filled) return;
+      const spec = (sl.dataset.productSlider||'all').trim();
+      let list = (spec==='' || spec==='all') ? GH.PRODUCTS
+        : spec.split(',').map(s=>GH.productBy(s.trim())).filter(Boolean);
+      if(!list.length) return;
+      // auto-scroll needs the set duplicated so the loop is seamless (skipped for reduced-motion)
+      const auto = sl.hasAttribute('data-autoscroll') && !reduce && list.length > 2;
+      if(auto){ sl.classList.add('gh-auto'); list = list.concat(list); }
+      track.innerHTML = list.map(p=>`<div class="gh-slide">${productCard(p)}</div>`).join('');
+      track.dataset.filled = '1';
+      const prev = sl.querySelector('.gh-prev'), next = sl.querySelector('.gh-next');
+      const step = ()=> Math.max(track.clientWidth*0.85, 240);
+
+      if(auto){
+        // continuous drift; loops back by one set-width once the second copy scrolls in
+        prev && prev.classList.remove('is-hidden');
+        next && next.classList.remove('is-hidden');
+        let paused=false, loopW=0, resumeT;
+        const measure = ()=>{ const s=track.querySelectorAll('.gh-slide'); const half=s.length/2;
+          loopW = s[half] ? s[half].offsetLeft - s[0].offsetLeft : 0; };
+        const resume = (d)=>{ clearTimeout(resumeT); resumeT=setTimeout(()=>{paused=false;}, d||0); };
+        const speed = 0.6; // px per frame — a gentle, luxe drift
+        const tick = ()=>{ if(!paused && loopW){ track.scrollLeft += speed;
+          if(track.scrollLeft >= loopW) track.scrollLeft -= loopW; } requestAnimationFrame(tick); };
+        const nudge = dir=>{ paused=true; track.scrollBy({left:dir*step(),behavior:'smooth'}); resume(2500); };
+        prev && prev.addEventListener('click',()=>nudge(-1));
+        next && next.addEventListener('click',()=>nudge( 1));
+        sl.addEventListener('pointerenter',()=>{paused=true;});
+        sl.addEventListener('pointerleave',()=>resume(0));
+        sl.addEventListener('touchstart',()=>{paused=true;},{passive:true});
+        sl.addEventListener('touchend',()=>resume(1500),{passive:true});
+        sl.addEventListener('focusin',()=>{paused=true;});
+        sl.addEventListener('focusout',()=>resume(800));
+        measure(); addEventListener('resize',measure,{passive:true}); addEventListener('load',measure);
+        requestAnimationFrame(tick);
+      } else {
+        prev && prev.addEventListener('click',()=>track.scrollBy({left:-step(),behavior:'smooth'}));
+        next && next.addEventListener('click',()=>track.scrollBy({left: step(),behavior:'smooth'}));
+        const sync = ()=>{ const max = track.scrollWidth - track.clientWidth - 4;
+          if(prev) prev.classList.toggle('is-hidden', track.scrollLeft <= 4);
+          if(next) next.classList.toggle('is-hidden', track.scrollLeft >= max || max <= 0);
+        };
+        track.addEventListener('scroll', sync, {passive:true});
+        addEventListener('resize', sync, {passive:true});
+        sync();
+      }
+    });
+  }
+  fillSliders();
 
   /* ---------- SEO: structured data + canonical ---------- */
   try{

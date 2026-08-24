@@ -33,7 +33,7 @@
     <!-- GALLERY -->
     <div class="lg:sticky lg:top-28">
       <div class="relative rounded-[2rem] overflow-hidden shadow-soft bg-blush">
-        <img id="mainImg" alt="" class="w-full aspect-[4/5] object-cover transition-all duration-500">
+        <img id="mainImg" alt="" class="w-full aspect-[4/5] object-cover object-top transition-all duration-500">
         <span id="mainBadge" class="absolute top-4 left-4 bg-glory-600 text-white text-xs px-3 py-1.5 rounded-full font-body"></span>
       </div>
       <div id="thumbs" class="mt-4 grid grid-cols-4 gap-3"></div>
@@ -121,7 +121,7 @@ else {
   // gallery
   function setMain(src){ $('mainImg').src=src; $('mainImg').alt=p.title; }
   setMain(p.img);
-  $('thumbs').innerHTML = p.gallery.map((g,i)=>`<button data-g="${g}" class="thumb rounded-2xl overflow-hidden aspect-square ${i===0?'ring-2 ring-glory-600':'ring-1 ring-black/5'}"><img src="${g}" class="w-full h-full object-cover" alt="${p.title} view ${i+1}"></button>`).join('');
+  $('thumbs').innerHTML = p.gallery.map((g,i)=>`<button data-g="${g}" class="thumb rounded-2xl overflow-hidden aspect-square ${i===0?'ring-2 ring-glory-600':'ring-1 ring-black/5'}"><img src="${g}" class="w-full h-full object-cover object-top" alt="${p.title} view ${i+1}"></button>`).join('');
   $('thumbs').querySelectorAll('.thumb').forEach(b=>b.onclick=()=>{ setMain(b.dataset.g);
     $('thumbs').querySelectorAll('.thumb').forEach(x=>{x.classList.remove('ring-2','ring-glory-600');x.classList.add('ring-1','ring-black/5');});
     b.classList.add('ring-2','ring-glory-600'); b.classList.remove('ring-1','ring-black/5'); });
