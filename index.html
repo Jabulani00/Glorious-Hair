@@ -25,40 +25,25 @@
 <span id="top"></span>
 
 <!-- ══ HERO ══ -->
-<section class="relative min-h-[100svh] flex items-center overflow-hidden">
-  <video class="gh-video absolute inset-0 w-full h-full object-cover object-center" autoplay muted loop playsinline preload="metadata" poster="assets/photos/hero-bg.webp" aria-hidden="true">
-    <source src="assets/images/videos/glorious_hair_true_landscape_16x9.mp4" type="video/mp4">
-  </video>
-  <div class="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/55 to-glory-900/40"></div>
-  <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/40"></div>
-  <div class="absolute -right-24 top-1/4 w-[38rem] h-[38rem] bg-glory-600/40 blur-3xl blob hidden md:block"></div>
-  <div class="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 pb-16 grid lg:grid-cols-12 gap-10 items-center">
-    <div class="lg:col-span-7 text-white">
-      <p data-hero class="inline-flex items-center gap-2 text-glory-200 tracking-[0.3em] uppercase text-xs font-body mb-5"><span class="w-8 h-px bg-glory-400"></span> We Serve Quality</p>
-      <h1 data-hero class="font-display font-semibold leading-[0.95] text-5xl sm:text-6xl lg:text-7xl">Crown Yourself in<br><span class="shimmer">Glorious</span> Hair.</h1>
-      <p data-hero class="mt-6 max-w-xl text-white/80 text-lg font-light font-body">100% human-hair frontals, glueless &amp; curly wigs — in every length and shade. Soft, silky, made to move. Nationwide delivery &amp; 3-month lay-by across South Africa.</p>
-      <div data-hero class="mt-8 flex flex-wrap items-center gap-4">
-        <a href="shop.html" class="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-glory-600 hover:bg-glory-500 text-white font-body shadow-glow transition">Shop the Collection <i class="fa-solid fa-arrow-right-long group-hover:translate-x-1 transition"></i></a>
-        <a href="#build" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/40 text-white font-body hover:bg-white/10 transition backdrop-blur">Build Your Look</a>
-      </div>
-      <div data-hero class="mt-12 flex flex-wrap gap-8">
-        <div><div class="font-display text-3xl font-semibold" data-count="12">0</div><div class="text-xs uppercase tracking-widest text-white/60 font-body">k+ Happy Clients</div></div>
-        <div><div class="font-display text-3xl font-semibold" data-count="100">0</div><div class="text-xs uppercase tracking-widest text-white/60 font-body">% Human Hair</div></div>
-        <div><div class="font-display text-3xl font-semibold"><span data-count="4">0</span>.9★</div><div class="text-xs uppercase tracking-widest text-white/60 font-body">Avg. Rating</div></div>
-      </div>
+<section class="relative min-h-[100svh] flex items-end overflow-hidden">
+  <picture>
+    <!-- wide branded banner on tablet/desktop; a portrait crop (model + pink box) on phones so the models aren't cropped away -->
+    <source media="(min-width:768px)" srcset="assets/photos/hero-banner.webp">
+    <img src="assets/photos/hero-banner-mobile.webp" alt="Glorious Hair — we serve quality" class="absolute inset-0 w-full h-full object-cover object-center" fetchpriority="high">
+  </picture>
+  <!-- soft bottom scrim so the CTAs stay legible over the light floor, without hiding the models or the banner's own centre wordmark -->
+  <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent"></div>
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-20 sm:pb-24 text-center text-white">
+    <h1 class="sr-only">Glorious Hair — luxury 100% human-hair wigs &amp; extensions in South Africa</h1>
+    <p data-hero class="font-body text-white/90 text-base sm:text-lg max-w-xl mx-auto drop-shadow">100% human-hair frontals, glueless &amp; curly wigs — nationwide delivery &amp; 3-month lay-by.</p>
+    <div data-hero class="mt-7 flex flex-wrap items-center justify-center gap-4">
+      <a href="shop.html" class="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-glory-600 hover:bg-glory-500 text-white font-body shadow-glow transition">Shop the Collection <i class="fa-solid fa-arrow-right-long group-hover:translate-x-1 transition"></i></a>
+      <a href="#build" class="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/50 text-white font-body hover:bg-white/10 transition backdrop-blur">Build Your Look</a>
     </div>
-    <div class="lg:col-span-5 hidden lg:flex justify-center">
-      <div data-hero class="float relative">
-        <div class="absolute -inset-4 bg-white/20 rounded-[2rem] blur-2xl"></div>
-        <div class="relative w-72 rounded-[2rem] overflow-hidden shadow-soft border-4 border-white/70 sheen">
-          <img src="assets/photos/hero-card.webp" alt="Glorious Hair curly wig on model" class="w-full h-96 object-cover object-top" loading="eager">
-          <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-ink/90 to-transparent text-white">
-            <div class="text-xs text-glory-200 uppercase tracking-widest font-body">Trending</div>
-            <div class="font-display text-xl">Curly Wig</div><div class="font-body text-sm text-white/80">from R1 900</div>
-          </div>
-          <span class="absolute top-3 left-3 bg-glory-600 text-white text-xs px-3 py-1 rounded-full font-body">Lay-By ✓</span>
-        </div>
-      </div>
+    <div data-hero class="mt-10 flex flex-wrap justify-center gap-8 sm:gap-12">
+      <div><div class="font-display text-3xl font-semibold" data-count="12">0</div><div class="text-xs uppercase tracking-widest text-white/70 font-body">k+ Happy Clients</div></div>
+      <div><div class="font-display text-3xl font-semibold" data-count="100">0</div><div class="text-xs uppercase tracking-widest text-white/70 font-body">% Human Hair</div></div>
+      <div><div class="font-display text-3xl font-semibold"><span data-count="4">0</span>.9★</div><div class="text-xs uppercase tracking-widest text-white/70 font-body">Avg. Rating</div></div>
     </div>
   </div>
   <a href="#features" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 flex flex-col items-center gap-2 text-xs font-body"><span class="tracking-widest uppercase">Scroll</span><span class="w-6 h-10 rounded-full border border-white/40 grid place-items-start p-1"><span class="w-1.5 h-2 rounded-full bg-white animate-bounce"></span></span></a>
