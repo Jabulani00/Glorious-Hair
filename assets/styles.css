@@ -91,4 +91,12 @@ label.lbl{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#7
   .gh-slider.gh-full .gh-next{right:.9rem;}
 }
 
+/* ===== Branded cursors ===== */
+html,body{cursor:url('cursor.svg') 5 10, auto;}
+a,button,summary,label[for],[role="button"],.card-swatch,.swatch,.size-btn,.thumb,[data-qadd],[data-code],[data-id],.gh-arrow,.line-card,select,[onclick]{cursor:url('cursor-pointer.svg') 5 10, pointer;}
+input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),textarea,[contenteditable="true"]{cursor:text;}
+:disabled,[disabled],.is-hidden{cursor:default;}
+/* touch devices don't have a cursor — don't force one */
+@media (hover:none),(pointer:coarse){html,body,a,button,summary,label[for],[role="button"],select{cursor:auto;}}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}.gh-track{scroll-behavior:auto;}}

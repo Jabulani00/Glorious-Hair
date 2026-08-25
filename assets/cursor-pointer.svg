@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="ghp" x1="8" y1="18" x2="55" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF2A9D"/>
+      <stop offset=".5" stop-color="#E6007E"/>
+      <stop offset="1" stop-color="#C9A24B"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- white halo for visibility on any background -->
+    <g stroke="#ffffff">
+      <path d="M35 26.5 A14.5 14.5 0 1 0 35 37.5" stroke-width="11.5"/>
+      <path d="M35 32 L25 32" stroke-width="11.5"/>
+      <path d="M41.5 18 L41.5 46" stroke-width="11"/>
+      <path d="M52.5 18 L52.5 46" stroke-width="11"/>
+      <path d="M41.5 32 L52.5 32" stroke-width="11"/>
+    </g>
+    <!-- gradient GH on top -->
+    <g stroke="url(#ghp)">
+      <path d="M35 26.5 A14.5 14.5 0 1 0 35 37.5" stroke-width="7"/>
+      <path d="M35 32 L25 32" stroke-width="7"/>
+      <path d="M41.5 18 L41.5 46" stroke-width="6.6"/>
+      <path d="M52.5 18 L52.5 46" stroke-width="6.6"/>
+      <path d="M41.5 32 L52.5 32" stroke-width="6.6"/>
+    </g>
+  </g>
+</svg>
