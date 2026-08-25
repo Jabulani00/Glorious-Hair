@@ -99,4 +99,26 @@ input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type
 /* touch devices don't have a cursor — don't force one */
 @media (hover:none),(pointer:coarse){html,body,a,button,summary,label[for],[role="button"],select{cursor:auto;}}
 
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}.gh-track{scroll-behavior:auto;}}
+/* ===== Branded loader + skeletons ===== */
+@keyframes gh-spin{to{transform:rotate(1turn);}}
+@keyframes gh-pulse{0%,100%{transform:scale(1);opacity:.85;}50%{transform:scale(1.1);opacity:1;}}
+@keyframes gh-bar{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+@keyframes gh-skel{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+/* full-page splash — covers the initial paint, fades out when ready */
+#gh-splash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(120% 120% at 50% 0%,#FFF6FA 0%,#FFE9F3 100%);transition:opacity .55s ease,visibility .55s ease;}
+#gh-splash.is-done{opacity:0;visibility:hidden;pointer-events:none;}
+.gh-splash-inner{display:flex;flex-direction:column;align-items:center;gap:1.1rem;}
+.gh-ring{position:relative;width:80px;height:80px;display:grid;place-items:center;}
+.gh-ring::before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 90deg,#FF2A9D,#E6007E,#C9A24B,#FF2A9D);-webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 6px),#000 calc(100% - 6px));mask:radial-gradient(farthest-side,#0000 calc(100% - 6px),#000 calc(100% - 6px));animation:gh-spin 1s linear infinite;}
+.gh-ring .gh-mark{width:44px;height:44px;background:url('logo-gh.svg') center/contain no-repeat;animation:gh-pulse 1.5s ease-in-out infinite;}
+.gh-splash-word{font-family:'Parisienne',cursive;font-size:2rem;line-height:1;color:#E6007E;}
+.gh-splash-bar{width:132px;height:4px;border-radius:99px;overflow:hidden;background:linear-gradient(90deg,#FFE4F0,#E6007E,#C9A24B,#FFE4F0);background-size:200% 100%;animation:gh-bar 1.25s linear infinite;}
+
+/* skeleton shimmer for content that is still loading */
+.gh-skel{background-color:#f6e7ef;background-image:linear-gradient(100deg,#f6e7ef 28%,#fdeef6 47%,#f6e7ef 62%);background-size:200% 100%;animation:gh-skel 1.25s linear infinite;}
+/* lazy image reveal — fade in once the pixels arrive */
+img.gh-lazy,img.gh-fade{opacity:0;transition:opacity .6s ease;}
+img.gh-lazy.is-loaded,img.gh-fade.is-loaded{opacity:1;}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}.gh-track{scroll-behavior:auto;}img.gh-lazy,img.gh-fade{opacity:1;}}

@@ -93,6 +93,27 @@
   document.body.insertAdjacentHTML('afterbegin', header);
   document.body.insertAdjacentHTML('beforeend', footer + floats);
 
+  /* ---------- splash loader + lazy image reveal ---------- */
+  (function(){
+    const splash = document.getElementById('gh-splash');
+    if(splash){
+      let done=false;
+      const hide=()=>{ if(done) return; done=true; splash.classList.add('is-done'); setTimeout(()=>splash.remove(),650); };
+      if(document.readyState==='complete') setTimeout(hide,250);
+      else addEventListener('load',()=>setTimeout(hide,200));
+      setTimeout(hide,1600); // safety cap — never wait on heavy media/video
+    }
+    // gently fade content images in as they decode; skeletons cover JS-injected cards
+    const reveal = img => img.classList.add('is-loaded');
+    document.querySelectorAll('img').forEach(img=>{
+      if(img.closest('#gh-splash') || img.classList.contains('gh-lazy')) return;
+      if(img.complete && img.naturalWidth>0) return;            // already painted — leave visible
+      img.classList.add('gh-fade');
+      img.addEventListener('load', ()=>reveal(img), {once:true});
+      img.addEventListener('error',()=>reveal(img), {once:true});
+    });
+  })();
+
   /* ---------- toast ---------- */
   const toastEl = document.getElementById('gh-toast'); let toastT;
   window.ghToast = (msg)=>{ toastEl.textContent=msg; toastEl.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>toastEl.classList.remove('show'),2200); };
@@ -172,8 +193,8 @@
     const line = GH.lineOf(p), from = GH.minPrice(line), def = GH.colorBy(p.color);
     const swatches = GH.COLORS.map(c=>`<button type="button" class="card-swatch w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-black/10 transition hover:scale-110${c.id===def.id?' is-active':''}" style="background:${c.hex}" data-color="${c.id}" data-img="${c.img||''}" title="${c.name}" aria-label="${c.name}"></button>`).join('');
     return `<article class="product-card group" data-pid="${p.id}" data-color="${def.id}">
-      <div class="relative rounded-3xl overflow-hidden shadow-soft sheen bg-white">
-        <a href="product.html?id=${p.id}" class="block"><img class="card-img w-full aspect-[4/5] object-cover object-top group-hover:scale-105 transition duration-700" src="${p.img}" alt="${p.title}" loading="lazy"></a>
+      <div class="relative rounded-3xl overflow-hidden shadow-soft sheen bg-white gh-skel">
+        <a href="product.html?id=${p.id}" class="block"><img class="card-img w-full aspect-[4/5] object-cover object-top group-hover:scale-105 transition duration-700 gh-lazy" src="${p.img}" alt="${p.title}" loading="lazy" onload="this.classList.add('is-loaded')"></a>
         <span class="absolute top-3 left-3 bg-glory-600 text-white text-[11px] px-3 py-1 rounded-full font-body tracking-wide pointer-events-none">${p.badge}</span>
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-ink text-[11px] px-2.5 py-1 rounded-full font-body pointer-events-none">★ ${p.rating}</span>
         <a href="product.html?id=${p.id}" class="absolute bottom-3 left-1/2 -translate-x-1/2 translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition bg-white text-ink text-sm px-5 py-2 rounded-full font-body shadow-soft whitespace-nowrap">View full →</a>
